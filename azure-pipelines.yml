@@ -3,10 +3,9 @@ trigger:
     include:
       - main
 
-pr:
-  branches:
-    include:
-      - main
+# PR validation is handled by Azure DevOps Build Validation policy.
+# Do not add a pr: trigger here to avoid duplicate runs.
+pr: none
 
 name: '${{ parameters.packageVersion }}'
 
