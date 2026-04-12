@@ -1,4 +1,4 @@
-﻿<nav class="docs-sidebar">
+﻿<nav class="docs-sidebar @AdditionalClass">
     <div class="docs-sidebar__section">
         <div class="docs-sidebar__label">Getting started</div>
         <NavLink class="docs-sidebar__link" href="" Match="NavLinkMatch.All">Introduction</NavLink>
@@ -63,4 +63,8 @@
         <NavLink class="docs-sidebar__link" href="components/title">Title</NavLink>
     </div>
 </nav>
+
+@code {
+    [Parameter] public string AdditionalClass { get; set; } = "";
+}
 

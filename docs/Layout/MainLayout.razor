@@ -1,6 +1,15 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager Navigation
+@implements IDisposable
 
 <header class="docs-header">
+    <button class="docs-header__toggle" @onclick="ToggleSidebar" aria-label="Toggle navigation">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+    </button>
     <a href="" class="docs-header__logo">
         <img src="images/logo.png" alt="NeoBrutalism Blazor logo" class="docs-header__logo-img" />
         NeoBrutalism <span>Blazor</span>
@@ -27,13 +36,48 @@
     </div>
 </header>
 
+@if (_sidebarOpen)
+{
+    <div class="docs-overlay" @onclick="CloseSidebar"></div>
+}
+
 <div class="docs-shell">
-    <NavMenu />
+    <NavMenu AdditionalClass="@(_sidebarOpen ? "docs-sidebar--open" : "")" />
     <main class="docs-main">
         @Body
     </main>
 </div>
 
 <NBSonner />
+
+@code {
+    private bool _sidebarOpen;
+
+    protected override void OnInitialized()
+    {
+        Navigation.LocationChanged += OnLocationChanged;
+    }
+
+    private void ToggleSidebar()
+    {
+        _sidebarOpen = !_sidebarOpen;
+    }
+
+    private void CloseSidebar()
+    {
+        _sidebarOpen = false;
+    }
+
+    private void OnLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+    {
+        _sidebarOpen = false;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        Navigation.LocationChanged -= OnLocationChanged;
+    }
+}
 
 
