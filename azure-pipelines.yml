@@ -3,6 +3,14 @@ trigger:
     include:
       - main
 
+resources:
+  repositories:
+    - repository: NeoBrutalismBlazor
+      type: github
+      endpoint: "Nyxra's GitHub"
+      name: nyxra-io/NeoBrutalism.Blazor
+      ref: main
+
 name: '${{ parameters.packageVersion }}'
 
 parameters:
@@ -26,6 +34,8 @@ stages:
       - job: RunTests
         displayName: 'Run Tests & Publish Coverage'
         steps:
+          - checkout: NeoBrutalismBlazor
+
           - task: UseDotNet@2
             displayName: 'Install .NET SDK'
             inputs:
@@ -57,7 +67,7 @@ stages:
       - job: PackAndPush
         displayName: 'Pack & Push'
         steps:
-          - checkout: self
+          - checkout: NeoBrutalismBlazor
             fetchDepth: 0
 
           - task: UseDotNet@2
@@ -100,6 +110,8 @@ stages:
       - job: BuildDocs
         displayName: 'Build Docs Site'
         steps:
+          - checkout: NeoBrutalismBlazor
+
           - task: UseDotNet@2
             displayName: 'Install .NET SDK'
             inputs:
