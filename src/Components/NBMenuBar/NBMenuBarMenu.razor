@@ -1,0 +1,42 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Menu Bar Menu — single trigger + dropdown *@
+
+<div class="nb-menubar__menu" @onfocusout="HandleFocusOut">
+    <button type="button"
+            class="nb-menubar__trigger @(_open ? "nb-menubar__trigger--open" : "")"
+            role="menuitem"
+            aria-haspopup="true"
+            aria-expanded="@_open"
+            @onclick="Toggle">
+        @Label
+    </button>
+    @if (_open)
+    {
+        <div class="nb-menubar__content" role="menu" @onclick="Close">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    private bool _open;
+
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private void Toggle() => _open = !_open;
+    private void Close() => _open = false;
+
+    [ExcludeFromCodeCoverage]
+    private void HandleFocusOut()
+    {
+        _ = Task.Delay(150).ContinueWith(_ => InvokeAsync(() =>
+        {
+            _open = false;
+            StateHasChanged();
+        }));
+    }
+}

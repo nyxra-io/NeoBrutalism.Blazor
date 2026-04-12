@@ -1,0 +1,11 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Progress Bar *@
+
+<div class="nb-progress" role="progressbar" aria-valuenow="@Value" aria-valuemin="0" aria-valuemax="100">
+    <div class="nb-progress__bar" style="width: @(Math.Clamp(Value, 0, 100))%"></div>
+</div>
+
+@code {
+    [Parameter]
+    public int Value { get; set; }
+}

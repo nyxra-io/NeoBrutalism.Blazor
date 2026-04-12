@@ -1,0 +1,90 @@
+@page "/components/textarea"
+
+<NBTitle Variant="@NBTitleVariant.Title">TextArea</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">Multi-line text input with an optional bottom action slot.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.TextAreaDefault">
+    <Preview>
+        <NBTextArea Id="demo-bio" Label="Bio" @bind-Value="_bio" Placeholder="Tell us about yourself…" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">With action slot</NBTitle>
+<DemoBlock Code="@CS.TextAreaActions">
+    <Preview>
+        <NBTextArea Id="demo-msg" Label="Message" @bind-Value="_msg" Rows="5">
+            <Actions>
+                <NBButton Size="@NBButtonSize.Small">Send</NBButton>
+            </Actions>
+        </NBTextArea>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Disabled</NBTitle>
+<DemoBlock Code="@CS.TextAreaDisabled">
+    <Preview>
+        <NBTextArea Id="demo-dis" Label="Notes" Value="Read-only content." Disabled="true" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Id</code> *</NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>HTML id.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Label</code> *</NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Field label text.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Value</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Bindable value.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Rows</code></NBTableCell>
+                <NBTableCell><code>int</code></NBTableCell>
+                <NBTableCell><code>4</code></NBTableCell>
+                <NBTableCell>Visible row height.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Placeholder</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Placeholder text.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Disabled</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Disables the textarea.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Actions</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Bottom slot for buttons.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private string? _bio;
+    private string? _msg;
+}

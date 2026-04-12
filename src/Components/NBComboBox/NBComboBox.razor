@@ -1,0 +1,121 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism ComboBox — searchable select using Popover + Command *@
+
+<div class="nb-field">
+<NBLabel For="@Id">@Label</NBLabel>
+<div class="nb-combobox" @onfocusout="HandleFocusOut">
+    <button type="button" id="@Id" class="nb-select__trigger" role="combobox"
+            aria-expanded="@_open" @onclick="Toggle">
+        <span class="nb-select__value @(Value is null ? "nb-select__value--placeholder" : "")">
+            @(SelectedLabel ?? Placeholder ?? "Select…")
+        </span>
+        <svg class="nb-select__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+            <path d="m7 15 5 5 5-5" /><path d="m7 9 5-5 5 5" />
+        </svg>
+    </button>
+    @if (_open)
+    {
+        <div class="nb-combobox__dropdown">
+            <div class="nb-combobox__search-wrap">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+                </svg>
+                <input class="nb-combobox__search" type="text" placeholder="@(SearchPlaceholder ?? "Search…")"
+                       @bind-value="_query" @bind-value:event="oninput" />
+            </div>
+            <div class="nb-combobox__list">
+                @{
+                    var filtered = Options.Where(o =>
+                        string.IsNullOrWhiteSpace(_query)
+                        || o.Label.Contains(_query, StringComparison.OrdinalIgnoreCase)).ToList();
+                }
+                @if (filtered.Count == 0)
+                {
+                    <div class="nb-command__empty">@(EmptyText ?? "No results.")</div>
+                }
+                else
+                {
+                    @foreach (var option in filtered)
+                    {
+                        var isSelected = option.Value == Value;
+                        <div class="nb-select__item @(isSelected ? "nb-select__item--selected" : "")"
+                             @onclick="() => SelectOption(option.Value)"
+                             @onclick:stopPropagation="true">
+                            <span class="nb-select__item-check">
+                                @if (isSelected)
+                                {
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                         stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 6 9 17l-5-5" />
+                                    </svg>
+                                }
+                            </span>
+                            <span>@option.Label</span>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    }
+</div>
+</div>
+
+@code {
+    private bool _open;
+    private string _query = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Id { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public IEnumerable<NBSelectOption> Options { get; set; } = [];
+
+    [Parameter]
+    public string? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    [Parameter]
+    public string? SearchPlaceholder { get; set; }
+
+    [Parameter]
+    public string? EmptyText { get; set; }
+
+    private string? SelectedLabel => Options.FirstOrDefault(o => o.Value == Value)?.Label;
+
+    private void Toggle()
+    {
+        _open = !_open;
+        if (!_open) _query = string.Empty;
+    }
+
+    private async Task SelectOption(string value)
+    {
+        _open = false;
+        _query = string.Empty;
+        var newVal = value == Value ? null : value;
+        await ValueChanged.InvokeAsync(newVal);
+    }
+
+    [ExcludeFromCodeCoverage]
+    private void HandleFocusOut()
+    {
+        _ = Task.Delay(150).ContinueWith(_ => InvokeAsync(() =>
+        {
+            _open = false;
+            _query = string.Empty;
+            StateHasChanged();
+        }));
+    }
+}

@@ -1,0 +1,24 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Image Card — figure with image and caption *@
+
+<figure class="nb-image-card @AdditionalClass" @attributes="AdditionalAttributes">
+    <img class="nb-image-card__img" src="@ImageUrl" alt="@(Alt ?? Caption)" />
+    <figcaption class="nb-image-card__caption">@Caption</figcaption>
+</figure>
+
+@code {
+    [Parameter, EditorRequired]
+    public string ImageUrl { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Caption { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Alt { get; set; }
+
+    [Parameter]
+    public string? AdditionalClass { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+}

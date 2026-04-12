@@ -1,0 +1,18 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Tooltip — CSS-only hover tooltip *@
+
+<span class="nb-tooltip-wrap">
+    <span class="nb-tooltip-trigger">@ChildContent</span>
+    <span class="nb-tooltip @($"nb-tooltip--{Side.ToString().ToLowerInvariant()}")">@Text</span>
+</span>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Text { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public NBTooltipSide Side { get; set; } = NBTooltipSide.Top;
+}

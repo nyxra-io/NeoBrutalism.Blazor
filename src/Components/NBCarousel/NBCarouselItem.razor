@@ -1,0 +1,11 @@
+@namespace NeoBrutalism.Blazor
+@* Carousel Item — single slide *@
+
+<div class="nb-carousel__item" role="group" aria-roledescription="slide">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

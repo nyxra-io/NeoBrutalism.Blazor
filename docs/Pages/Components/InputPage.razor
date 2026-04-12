@@ -1,0 +1,112 @@
+@page "/components/input"
+
+<NBTitle Variant="@NBTitleVariant.Title">Input</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">Text field with label, subtitle, error state and multiple types.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.InputDefault">
+    <Preview>
+        <NBInput Id="demo-name" Label="Full name" @bind-Value="_val" Placeholder="John Doe" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">With subtitle</NBTitle>
+<DemoBlock Code="@CS.InputSubtitle">
+    <Preview>
+        <NBInput Id="demo-email" Label="Email" @bind-Value="_email" Subtitle="We will never share your email." Placeholder="you@example.com" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Error state</NBTitle>
+<DemoBlock Code="@CS.InputError">
+    <Preview>
+        <NBInput Id="demo-err" Label="Username" @bind-Value="_user" ErrorMessage="Username is already taken." />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Disabled</NBTitle>
+<DemoBlock Code="@CS.InputDisabled">
+    <Preview>
+        <NBInput Id="demo-dis" Label="Account ID" Value="ACC-0042" Disabled="true" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Types</NBTitle>
+<DemoBlock Code="@CS.InputTypes">
+    <Preview>
+        <NBInput Id="demo-pwd" Label="Password" Type="@NBInputType.Password" @bind-Value="_pwd" />
+        <div style="margin-top:12px">
+            <NBInput Id="demo-num" Label="Amount" Type="@NBInputType.Number" @bind-Value="_num" />
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Id</code> *</NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>HTML id, links label to input.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Label</code> *</NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Field label text.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Value</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Bindable value.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Type</code></NBTableCell>
+                <NBTableCell><code>NBInputType</code></NBTableCell>
+                <NBTableCell><code>Text</code></NBTableCell>
+                <NBTableCell>Input type.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Placeholder</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Placeholder text.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Disabled</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Disables the input.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Subtitle</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Helper text below the input.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ErrorMessage</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Error text; changes border to red.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private string? _val;
+    private string? _email;
+    private string? _user;
+    private string? _pwd;
+    private string? _num;
+}

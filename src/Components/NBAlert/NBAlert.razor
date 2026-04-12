@@ -1,0 +1,31 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Alert Component *@
+
+<div class="nb-alert nb-alert--@Variant.ToString().ToLowerInvariant()" role="alert">
+    @if (Icon is not null)
+    {
+        <div class="nb-alert__icon">@Icon</div>
+    }
+    <div class="nb-alert__content">
+        @if (!string.IsNullOrWhiteSpace(Title))
+        {
+            <div class="nb-alert__title">@Title</div>
+        }
+        <div class="nb-alert__body">@Body</div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Body { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public NBAlertVariant Variant { get; set; } = NBAlertVariant.Default;
+
+    /// <summary>Optional icon rendered to the left of the content.</summary>
+    [Parameter]
+    public RenderFragment? Icon { get; set; }
+}

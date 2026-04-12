@@ -1,0 +1,29 @@
+@inject IJSRuntime JS
+
+<div class="docs-demo__code" style="margin-bottom:1.5rem">
+    <button class="docs-demo__copy" @onclick="CopyCode">@_copyLabel</button>
+    <pre><code class="language-@Language" @ref="_codeRef">@Code</code></pre>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public string Code { get; set; } = string.Empty;
+    [Parameter] public string Language { get; set; } = "razor";
+
+    private string _copyLabel = "Copy";
+    private ElementReference _codeRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await JS.InvokeVoidAsync("hljs.highlightElement", _codeRef);
+    }
+
+    private async Task CopyCode()
+    {
+        await JS.InvokeVoidAsync("navigator.clipboard.writeText", Code);
+        _copyLabel = "Copied!";
+        await Task.Delay(1500);
+        _copyLabel = "Copy";
+        StateHasChanged();
+    }
+}

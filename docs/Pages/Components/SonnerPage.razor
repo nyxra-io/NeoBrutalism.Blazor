@@ -1,0 +1,92 @@
+@page "/components/sonner"
+
+<NBTitle Variant="@NBTitleVariant.Title">Sonner</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">Toast notification system with auto-dismiss and variants.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Setup</NBTitle>
+<CodeBlock Code="@CS.SonnerSetup" />
+
+<NBTitle Variant="@NBTitleVariant.Section">Usage</NBTitle>
+<DemoBlock Code="@CS.SonnerUsage">
+    <Preview>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+            <NBButton OnClick="ShowDefault">Default Toast</NBButton>
+            <NBButton Variant="@NBButtonVariant.Success" OnClick="ShowSuccess">Success</NBButton>
+            <NBButton Variant="@NBButtonVariant.Danger" OnClick="ShowError">Error</NBButton>
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.SubSection">NBSonner (container)</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Position</code></NBTableCell>
+                <NBTableCell><code>NBSonnerPosition</code></NBTableCell>
+                <NBTableCell><code>BottomRight</code></NBTableCell>
+                <NBTableCell>Where toasts are displayed.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>MaxToasts</code></NBTableCell>
+                <NBTableCell><code>int</code></NBTableCell>
+                <NBTableCell><code>3</code></NBTableCell>
+                <NBTableCell>Maximum visible toasts.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.SubSection">NBSonnerService</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Method</NBTableHead>
+                <NBTableHead>Parameters</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Show()</code></NBTableCell>
+                <NBTableCell>message, description?, variant?, durationMs?</NBTableCell>
+                <NBTableCell>Show a custom toast.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Success()</code></NBTableCell>
+                <NBTableCell>message, description?</NBTableCell>
+                <NBTableCell>Show a success toast.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Error()</code></NBTableCell>
+                <NBTableCell>message, description?</NBTableCell>
+                <NBTableCell>Show an error toast.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Warning()</code></NBTableCell>
+                <NBTableCell>message, description?</NBTableCell>
+                <NBTableCell>Show a warning toast.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Info()</code></NBTableCell>
+                <NBTableCell>message, description?</NBTableCell>
+                <NBTableCell>Show an info toast.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    [Inject] private NBSonnerService Sonner { get; set; } = default!;
+
+    private void ShowDefault() => Sonner.Show("Event created", "Monday, January 1st at 9:00 AM");
+    private void ShowSuccess() => Sonner.Success("Saved successfully!");
+    private void ShowError() => Sonner.Error("Something went wrong.");
+}

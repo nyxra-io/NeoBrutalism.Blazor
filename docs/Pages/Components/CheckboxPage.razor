@@ -1,0 +1,71 @@
+@page "/components/checkbox"
+
+<NBTitle Variant="@NBTitleVariant.Title">Checkbox</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">Binary toggle with a label. Supports two-way binding via <code>@@bind-Checked</code>.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.CheckboxDefault">
+    <Preview>
+        <NBCheckbox Id="demo-terms" Label="I agree to the terms and conditions" @bind-Checked="_terms" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Checked by default</NBTitle>
+<DemoBlock Code="@CS.CheckboxChecked">
+    <Preview>
+        <NBCheckbox Id="demo-news" Label="Send me newsletters" @bind-Checked="_news" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Disabled</NBTitle>
+<DemoBlock Code="@CS.CheckboxDisabled">
+    <Preview>
+        <div style="display:flex;flex-direction:column;gap:8px">
+            <NBCheckbox Id="demo-dis1" Label="Disabled unchecked" Disabled="true" />
+            <NBCheckbox Id="demo-dis2" Label="Disabled checked" Checked="true" Disabled="true" />
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Id</code> *</NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>HTML id.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Label</code> *</NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Checkbox label text.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Checked</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Checked state (bindable).</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Disabled</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Disables the checkbox.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private bool _terms;
+    private bool _news = true;
+}

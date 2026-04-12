@@ -1,0 +1,107 @@
+@page "/theming"
+
+<NBTitle Variant="@NBTitleVariant.Title">Theming</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">Customize colors, shadows and typography via CSS variables or NBThemeProvider.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Option A — NBThemeProvider</NBTitle>
+<p>Wrap any subtree with <code>NBThemeProvider</code>. Only properties you set will override the defaults. You can nest multiple providers for different sections.</p>
+
+<CodeBlock Code="@CS.ThemingProvider" />
+
+<NBTitle Variant="@NBTitleVariant.Section">Option B — CSS override</NBTitle>
+<p>Override the variables directly in your stylesheet:</p>
+
+<CodeBlock Language="css" Code="@CS.ThemingCssOverride" />
+
+<NBTitle Variant="@NBTitleVariant.Section">Token reference</NBTitle>
+
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>CSS variable</NBTableHead>
+                <NBTableHead>NBTheme property</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>--nb-black</code></NBTableCell>
+                <NBTableCell><code>Black</code></NBTableCell>
+                <NBTableCell><code>#000000</code></NBTableCell>
+                <NBTableCell>Borders and text</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>--nb-white</code></NBTableCell>
+                <NBTableCell><code>White</code></NBTableCell>
+                <NBTableCell><code>#ffffff</code></NBTableCell>
+                <NBTableCell>Component backgrounds</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>--nb-bg</code></NBTableCell>
+                <NBTableCell><code>Background</code></NBTableCell>
+                <NBTableCell><code>#F8F7FF</code></NBTableCell>
+                <NBTableCell>Page background</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>--nb-bg-secondary</code></NBTableCell>
+                <NBTableCell><code>BackgroundDark</code></NBTableCell>
+                <NBTableCell><code>#EDE9FE</code></NBTableCell>
+                <NBTableCell>Secondary background</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>--nb-primary</code></NBTableCell>
+                <NBTableCell><code>Primary</code></NBTableCell>
+                <NBTableCell><code>#A78BFA</code></NBTableCell>
+                <NBTableCell>Primary accent</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>--nb-primary-hover</code></NBTableCell>
+                <NBTableCell><code>PrimaryHover</code></NBTableCell>
+                <NBTableCell><code>#8B5CF6</code></NBTableCell>
+                <NBTableCell>Primary hover state</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>--nb-danger</code></NBTableCell>
+                <NBTableCell><code>Danger</code></NBTableCell>
+                <NBTableCell><code>#F87171</code></NBTableCell>
+                <NBTableCell>Destructive color</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>--nb-success</code></NBTableCell>
+                <NBTableCell><code>Success</code></NBTableCell>
+                <NBTableCell><code>#22c55e</code></NBTableCell>
+                <NBTableCell>Success color</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>--nb-muted</code></NBTableCell>
+                <NBTableCell><code>Muted</code></NBTableCell>
+                <NBTableCell><code>#8B8FA3</code></NBTableCell>
+                <NBTableCell>Helper/muted text</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>--nb-shadow</code></NBTableCell>
+                <NBTableCell><code>Shadow</code></NBTableCell>
+                <NBTableCell><code>4px 4px 0 #000</code></NBTableCell>
+                <NBTableCell>Hard shadow</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>--nb-border-width</code></NBTableCell>
+                <NBTableCell><code>Border</code></NBTableCell>
+                <NBTableCell><code>2px</code></NBTableCell>
+                <NBTableCell>Border thickness</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>--nb-radius</code></NBTableCell>
+                <NBTableCell><code>Radius</code></NBTableCell>
+                <NBTableCell><code>0</code></NBTableCell>
+                <NBTableCell>Border radius</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>--nb-font</code></NBTableCell>
+                <NBTableCell><code>Font</code></NBTableCell>
+                <NBTableCell><code>'Inter', sans-serif</code></NBTableCell>
+                <NBTableCell>Font family</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>

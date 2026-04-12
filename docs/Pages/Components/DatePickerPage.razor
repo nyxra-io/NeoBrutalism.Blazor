@@ -1,0 +1,93 @@
+@page "/components/date-picker"
+
+<NBTitle Variant="@NBTitleVariant.Title">Date Picker</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A button trigger that opens a calendar in a dropdown.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.DatePickerDefault">
+    <Preview>
+        <div style="max-width:16rem">
+            <NBDatePicker Id="dob" Label="Date of birth" @bind-Value="_dob" />
+        </div>
+        <p>@_dob?.ToString("dd/MM/yyyy")</p>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">With min/max</NBTitle>
+<DemoBlock Code="@CS.DatePickerMinMax">
+    <Preview>
+        <div style="max-width:16rem">
+            <NBDatePicker Id="booking" Label="Booking date"
+                          @bind-Value="_booking"
+                          MinDate="DateTime.Today"
+                          MaxDate="DateTime.Today.AddMonths(3)" />
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Label</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Field label. Required.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Id</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Element id. Required.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Value</code></NBTableCell>
+                <NBTableCell><code>DateTime?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Currently selected date.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ValueChanged</code></NBTableCell>
+                <NBTableCell><code>EventCallback&lt;DateTime?&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Fires when date is selected.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Placeholder</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>"Pick a date"</code></NBTableCell>
+                <NBTableCell>Trigger button placeholder.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Format</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell><code>"dd/MM/yyyy"</code></NBTableCell>
+                <NBTableCell>Date display format.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>MinDate</code></NBTableCell>
+                <NBTableCell><code>DateTime?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Minimum selectable date.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>MaxDate</code></NBTableCell>
+                <NBTableCell><code>DateTime?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Maximum selectable date.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private DateTime? _dob;
+    private DateTime? _booking;
+}

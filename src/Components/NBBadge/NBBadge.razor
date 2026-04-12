@@ -1,0 +1,12 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Badge Component *@
+
+<span class="nb-badge nb-badge--@Variant.ToString().ToLowerInvariant()">@ChildContent</span>
+
+@code {
+    [Parameter]
+    public NBBadgeVariant Variant { get; set; } = NBBadgeVariant.Default;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

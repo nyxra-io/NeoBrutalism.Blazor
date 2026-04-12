@@ -1,0 +1,37 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Breadcrumb *@
+
+<nav aria-label="breadcrumb">
+    <ol class="nb-breadcrumb">
+        @for (int i = 0; i < Items.Count; i++)
+        {
+            var item = Items[i];
+            var isLast = i == Items.Count - 1;
+
+            <li class="nb-breadcrumb__item">
+                @if (!isLast && !string.IsNullOrEmpty(item.Href))
+                {
+                    <a href="@item.Href" class="nb-breadcrumb__link">@item.Label</a>
+                }
+                else if (!isLast)
+                {
+                    <span class="nb-breadcrumb__link">@item.Label</span>
+                }
+                else
+                {
+                    <span class="nb-breadcrumb__page" aria-current="page">@item.Label</span>
+                }
+
+                @if (!isLast)
+                {
+                    <span class="nb-breadcrumb__separator" aria-hidden="true">/</span>
+                }
+            </li>
+        }
+    </ol>
+</nav>
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<NBBreadcrumbItem> Items { get; set; } = [];
+}

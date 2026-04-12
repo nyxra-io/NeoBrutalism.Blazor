@@ -1,0 +1,20 @@
+@namespace NeoBrutalism.Blazor
+
+<div style="@_style">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public NBTheme Theme { get; set; } = new();
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    private string _style = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        _style = Theme.ToCssVariables();
+    }
+}

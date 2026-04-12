@@ -1,0 +1,11 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Accordion — container *@
+
+<div class="nb-accordion">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

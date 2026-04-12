@@ -1,0 +1,154 @@
+@namespace NeoBrutalism.Blazor
+@typeparam TItem
+@* Neo Brutalism Data Table — sortable, filterable, paginated table *@
+
+<div class="nb-data-table">
+    @if (Searchable)
+    {
+        <div class="nb-data-table__toolbar">
+            <input class="nb-input nb-data-table__filter" type="text" placeholder="Search…"
+                   @bind-value="_searchQuery" @bind-value:event="oninput" />
+        </div>
+    }
+
+    <div class="nb-table-wrapper">
+        <table class="nb-table">
+            <thead class="nb-table-header">
+                <tr>
+                    @foreach (var col in Columns)
+                    {
+                        <th class="nb-table-head">
+                            @if (col.Sortable)
+                            {
+                                <button type="button" class="nb-data-table__sort-btn" @onclick="() => ToggleSort(col)">
+                                    @col.Title
+                                    @if (_sortColumn == col)
+                                    {
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                             stroke-linecap="round" stroke-linejoin="round"
+                                             style="@(_sortAsc ? "" : "transform: rotate(180deg)")">
+                                            <path d="m6 9 6 6 6-6" />
+                                        </svg>
+                                    }
+                                </button>
+                            }
+                            else
+                            {
+                                @col.Title
+                            }
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody class="nb-table-body">
+                @{
+                    var rows = GetPagedItems();
+                }
+                @if (rows.Count == 0)
+                {
+                    <tr>
+                        <td class="nb-table-cell" colspan="@Columns.Count" style="text-align: center; padding: 2rem;">
+                            No results.
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var item in rows)
+                    {
+                        <tr class="nb-table-row">
+                            @foreach (var col in Columns)
+                            {
+                                <td class="nb-table-cell">
+                                    @if (col.Template is not null)
+                                    {
+                                        @col.Template(item)
+                                    }
+                                    else
+                                    {
+                                        @(col.Field(item)?.ToString())
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @if (PageSize > 0 && GetFilteredItems().Count > PageSize)
+    {
+        <div class="nb-data-table__pagination">
+            <span class="nb-data-table__info">
+                @($"{(_currentPage - 1) * PageSize + 1}–{Math.Min(_currentPage * PageSize, GetFilteredItems().Count)} of {GetFilteredItems().Count}")
+            </span>
+            <NBPagination TotalPages="@TotalPages" @bind-CurrentPage="_currentPage" />
+        </div>
+    }
+</div>
+
+@code {
+    private string _searchQuery = string.Empty;
+    private int _currentPage = 1;
+    private NBDataTableColumn<TItem>? _sortColumn;
+    private bool _sortAsc = true;
+
+    [Parameter, EditorRequired]
+    public IReadOnlyList<TItem> Items { get; set; } = [];
+
+    [Parameter, EditorRequired]
+    public IReadOnlyList<NBDataTableColumn<TItem>> Columns { get; set; } = [];
+
+    [Parameter]
+    public int PageSize { get; set; } = 10;
+
+    [Parameter]
+    public bool Searchable { get; set; }
+
+    [Parameter]
+    public Func<TItem, string>? SearchField { get; set; }
+
+    private int TotalPages => PageSize > 0 ? (int)Math.Ceiling((double)GetFilteredItems().Count / PageSize) : 1;
+
+    private List<TItem> GetFilteredItems()
+    {
+        IEnumerable<TItem> result = Items;
+
+        if (Searchable && !string.IsNullOrWhiteSpace(_searchQuery) && SearchField is not null)
+        {
+            result = result.Where(i => SearchField(i).Contains(_searchQuery, StringComparison.OrdinalIgnoreCase));
+        }
+
+        if (_sortColumn is not null)
+        {
+            result = _sortAsc
+                ? result.OrderBy(i => _sortColumn.Field(i)?.ToString(), StringComparer.OrdinalIgnoreCase)
+                : result.OrderByDescending(i => _sortColumn.Field(i)?.ToString(), StringComparer.OrdinalIgnoreCase);
+        }
+
+        return result.ToList();
+    }
+
+    private List<TItem> GetPagedItems()
+    {
+        var filtered = GetFilteredItems();
+        if (PageSize <= 0) return filtered;
+        return filtered.Skip((_currentPage - 1) * PageSize).Take(PageSize).ToList();
+    }
+
+    private void ToggleSort(NBDataTableColumn<TItem> col)
+    {
+        if (_sortColumn == col)
+        {
+            _sortAsc = !_sortAsc;
+        }
+        else
+        {
+            _sortColumn = col;
+            _sortAsc = true;
+        }
+        _currentPage = 1;
+    }
+}

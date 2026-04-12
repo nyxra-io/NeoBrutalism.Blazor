@@ -1,0 +1,19 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Table — outer wrapper *@
+
+<div class="nb-table-wrapper">
+    <table class="nb-table @AdditionalClass" @attributes="AdditionalAttributes">
+        @ChildContent
+    </table>
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public string? AdditionalClass { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+}

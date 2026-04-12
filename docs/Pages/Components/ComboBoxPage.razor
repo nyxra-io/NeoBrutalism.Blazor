@@ -1,0 +1,93 @@
+@page "/components/combobox"
+
+<NBTitle Variant="@NBTitleVariant.Title">ComboBox</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A searchable select dropdown combining Popover and Command patterns.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.ComboBoxDefault">
+    <Preview>
+        <div style="width:16rem">
+            <NBComboBox Id="framework" Label="Framework"
+                        @bind-Value="_framework"
+                        Placeholder="Select framework…"
+                        SearchPlaceholder="Search frameworks…"
+                        Options="_frameworks" />
+        </div>
+        <p>Selected: @_framework</p>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Label</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Field label. Required.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Id</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Element id. Required.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Options</code></NBTableCell>
+                <NBTableCell><code>IEnumerable&lt;NBSelectOption&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Selectable options. Required.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Value</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Currently selected value.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ValueChanged</code></NBTableCell>
+                <NBTableCell><code>EventCallback&lt;string?&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Fires on selection change.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Placeholder</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>"Select…"</code></NBTableCell>
+                <NBTableCell>Trigger button placeholder.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>SearchPlaceholder</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>"Search…"</code></NBTableCell>
+                <NBTableCell>Search input placeholder.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>EmptyText</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>"No results."</code></NBTableCell>
+                <NBTableCell>Message when no options match.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private string? _framework;
+
+    private readonly List<NBSelectOption> _frameworks =
+    [
+        new("blazor", "Blazor"),
+        new("react", "React"),
+        new("vue", "Vue"),
+        new("angular", "Angular"),
+        new("svelte", "Svelte")
+    ];
+}

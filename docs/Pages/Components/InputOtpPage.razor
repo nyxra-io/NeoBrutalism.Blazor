@@ -1,0 +1,62 @@
+@page "/components/input-otp"
+
+<NBTitle Variant="@NBTitleVariant.Title">Input OTP</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A one-time password input with individual character slots.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default (6 digits)</NBTitle>
+<DemoBlock Code="@CS.InputOtpDefault">
+    <Preview>
+        <NBInputOtp Length="6" @bind-Value="_otp" />
+        <p>Value: @_otp</p>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">4-digit PIN</NBTitle>
+<DemoBlock Code="@CS.InputOtpFour">
+    <Preview>
+        <NBInputOtp Length="4" @bind-Value="_pin" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Length</code></NBTableCell>
+                <NBTableCell><code>int</code></NBTableCell>
+                <NBTableCell><code>6</code></NBTableCell>
+                <NBTableCell>Number of OTP slots.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Value</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Current OTP value.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ValueChanged</code></NBTableCell>
+                <NBTableCell><code>EventCallback&lt;string&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Fires when value changes.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Disabled</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Disables all slots.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private string? _otp;
+    private string? _pin;
+}

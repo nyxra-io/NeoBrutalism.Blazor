@@ -1,0 +1,104 @@
+@page "/components/alert-dialog"
+
+<NBTitle Variant="@NBTitleVariant.Title">Alert Dialog</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A modal confirmation dialog that requires explicit user action.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.AlertDialogDefault">
+    <Preview>
+        <NBButton Variant="@NBButtonVariant.Danger" OnClick="() => _alertOpen = true">Delete account</NBButton>
+        <NBAlertDialog IsVisible="_alertOpen"
+                       Title="Are you absolutely sure?"
+                       Description="This action cannot be undone. This will permanently delete your account."
+                       OnConfirm="() => _alertOpen = false"
+                       OnCancel="() => _alertOpen = false" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Custom button text</NBTitle>
+<DemoBlock Code="@CS.AlertDialogCustomButtons">
+    <Preview>
+        <NBButton OnClick="() => _open2 = true">Discard changes</NBButton>
+        <NBAlertDialog IsVisible="_open2"
+                       Title="Discard changes?"
+                       Description="You have unsaved changes."
+                       ConfirmText="Discard"
+                       CancelText="Keep editing"
+                       ConfirmVariant="@NBButtonVariant.Danger"
+                       OnConfirm="() => _open2 = false"
+                       OnCancel="() => _open2 = false" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>IsVisible</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Controls dialog visibility.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Title</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Dialog title. Required.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Description</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Description text.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Extra body content.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>OnConfirm</code></NBTableCell>
+                <NBTableCell><code>EventCallback</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Fires when confirm is clicked.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>OnCancel</code></NBTableCell>
+                <NBTableCell><code>EventCallback</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Fires when cancel is clicked.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ConfirmText</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell><code>"Continue"</code></NBTableCell>
+                <NBTableCell>Confirm button text.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>CancelText</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell><code>"Cancel"</code></NBTableCell>
+                <NBTableCell>Cancel button text.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ConfirmVariant</code></NBTableCell>
+                <NBTableCell><code>NBButtonVariant</code></NBTableCell>
+                <NBTableCell><code>Danger</code></NBTableCell>
+                <NBTableCell>Variant of the confirm button.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private bool _alertOpen;
+    private bool _open2;
+}

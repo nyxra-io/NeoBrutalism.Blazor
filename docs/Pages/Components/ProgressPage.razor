@@ -1,0 +1,56 @@
+@page "/components/progress"
+
+<NBTitle Variant="@NBTitleVariant.Title">Progress</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A horizontal progress bar that accepts a value between 0 and 100.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.ProgressDefault">
+    <Preview>
+        <NBProgress Value="40" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Various values</NBTitle>
+<DemoBlock Code="@CS.ProgressValues">
+    <Preview>
+        <div style="display:flex;flex-direction:column;gap:12px;width:100%">
+            <NBProgress Value="10" />
+            <NBProgress Value="50" />
+            <NBProgress Value="80" />
+            <NBProgress Value="100" />
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Animated</NBTitle>
+<DemoBlock Code="@CS.ProgressAnimated">
+    <Preview>
+        <NBProgress Value="@_progress" />
+        <NBButton Size="@NBButtonSize.Small" OnClick="Increment" style="margin-top:12px">+10</NBButton>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Value</code></NBTableCell>
+                <NBTableCell><code>int</code></NBTableCell>
+                <NBTableCell><code>0</code></NBTableCell>
+                <NBTableCell>Progress percentage. Clamped to 0–100.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private int _progress = 20;
+    private void Increment() => _progress = Math.Min(100, _progress + 10);
+}

@@ -1,0 +1,81 @@
+@page "/components/command"
+
+<NBTitle Variant="@NBTitleVariant.Title">Command</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A searchable command palette with grouped items.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.CommandDefault">
+    <Preview>
+        <div style="max-width:28rem">
+            <NBCommand Groups="_commandGroups" OnSelect="HandleSelect" />
+        </div>
+        <p>Selected: @_selected</p>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Groups</code></NBTableCell>
+                <NBTableCell><code>IReadOnlyList&lt;NBCommandGroup&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Grouped command items. Required.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Placeholder</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell><code>"Type a command or search…"</code></NBTableCell>
+                <NBTableCell>Input placeholder text.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>OnSelect</code></NBTableCell>
+                <NBTableCell><code>EventCallback&lt;NBCommandItem&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Fires when an item is selected.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>EmptyText</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell><code>"No results found."</code></NBTableCell>
+                <NBTableCell>Text shown when no results match.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">Models</NBTitle>
+<CodeBlock Code="@_models" />
+
+@code {
+    private string? _selected;
+
+    private readonly List<NBCommandGroup> _commandGroups =
+    [
+        new("Suggestions", new NBCommandItem[]
+        {
+            new("Calendar", "calendar"),
+            new("Search", "search"),
+            new("Settings", "settings", "⌘S")
+        }),
+        new("Actions", new NBCommandItem[]
+        {
+            new("Create new file", "new-file"),
+            new("Open recent", "open-recent", "⌘R")
+        })
+    ];
+
+    private void HandleSelect(NBCommandItem item) => _selected = item.Label;
+
+    private const string _models = """
+        record NBCommandGroup(string Heading, IReadOnlyList<NBCommandItem> Items);
+        record NBCommandItem(string Label, string Value, string? Shortcut = null, bool Disabled = false);
+        """;
+}

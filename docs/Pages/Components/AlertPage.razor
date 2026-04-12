@@ -1,0 +1,82 @@
+@page "/components/alert"
+
+<NBTitle Variant="@NBTitleVariant.Title">Alert</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">Contextual feedback messages with optional title and icon slot.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Variants</NBTitle>
+<DemoBlock Code="@CS.AlertVariants">
+    <Preview>
+        <div style="display:flex;flex-direction:column;gap:10px">
+            <NBAlert Variant="@NBAlertVariant.Default" Body="Your changes have been saved." />
+            <NBAlert Variant="@NBAlertVariant.Info" Body="The system will restart tonight at 2 AM." />
+            <NBAlert Variant="@NBAlertVariant.Success" Body="Payment received successfully." />
+            <NBAlert Variant="@NBAlertVariant.Warning" Body="Your subscription expires in 3 days." />
+            <NBAlert Variant="@NBAlertVariant.Destructive" Body="This document will be permanently deleted." />
+            <NBAlert Variant="@NBAlertVariant.Error" Body="Failed to connect to the server." />
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">With title</NBTitle>
+<DemoBlock Code="@CS.AlertWithTitle">
+    <Preview>
+        <NBAlert Variant="@NBAlertVariant.Warning"
+                 Title="Low disk space"
+                 Body="You have less than 1 GB remaining. Consider deleting unused files." />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">With icon slot</NBTitle>
+<DemoBlock Code="@CS.AlertWithIcon">
+    <Preview>
+        <NBAlert Variant="@NBAlertVariant.Success" Title="Deployed!" Body="Your app is live at example.com.">
+            <Icon>
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2.5">
+                    <polyline points="20 6 9 17 4 12" />
+                </svg>
+            </Icon>
+        </NBAlert>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Body</code> *</NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>The main alert message.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Title</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Bold title above the body.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Variant</code></NBTableCell>
+                <NBTableCell><code>NBAlertVariant</code></NBTableCell>
+                <NBTableCell><code>Default</code></NBTableCell>
+                <NBTableCell>Color theme.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Icon</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Optional SVG rendered to the left.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">Enum</NBTitle>
+<CodeBlock Code="@CS.AlertEnum" />

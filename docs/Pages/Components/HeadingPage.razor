@@ -1,0 +1,55 @@
+@page "/components/heading"
+
+<NBTitle Variant="@NBTitleVariant.Title">Heading</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">Semantic heading elements (h1–h6) with Neo Brutalism typography.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">All levels</NBTitle>
+<DemoBlock Code="@CS.HeadingAll">
+    <Preview>
+        <NBHeading Variant="@NBHeadingVariant.H1">H1 — Page title</NBHeading>
+        <NBHeading Variant="@NBHeadingVariant.H2">H2 — Section title</NBHeading>
+        <NBHeading Variant="@NBHeadingVariant.H3">H3 — Sub-section</NBHeading>
+        <NBHeading Variant="@NBHeadingVariant.H4">H4 — Card title</NBHeading>
+        <NBHeading Variant="@NBHeadingVariant.H5">H5 — Sidebar group</NBHeading>
+        <NBHeading Variant="@NBHeadingVariant.H6">H6 — Caption heading</NBHeading>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Variant</code></NBTableCell>
+                <NBTableCell><code>NBHeadingVariant</code></NBTableCell>
+                <NBTableCell><code>H2</code></NBTableCell>
+                <NBTableCell>Heading level to render (H1–H6).</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Content displayed inside the heading element.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>AdditionalAttributes</code></NBTableCell>
+                <NBTableCell><code>Dictionary&lt;string, object&gt;?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Additional HTML attributes forwarded to the rendered element.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">Enum</NBTitle>
+<DemoBlock Code="@CS.HeadingEnum">
+    <Preview>
+        <p><code>NBHeadingVariant</code>: H1, H2, H3, H4, H5, H6</p>
+    </Preview>
+</DemoBlock>

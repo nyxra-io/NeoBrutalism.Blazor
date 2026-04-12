@@ -1,0 +1,45 @@
+@page "/components/label"
+
+<NBTitle Variant="@NBTitleVariant.Title">Label</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A styled <code>&lt;label&gt;</code> element that links to its input via <code>for</code>.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Standalone</NBTitle>
+<DemoBlock Code="@CS.LabelStandalone">
+    <Preview>
+        <NBLabel For="demo-standalone">First name</NBLabel>
+        <input id="demo-standalone" class="nb-input" placeholder="John" style="margin-top:4px" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Without for attribute</NBTitle>
+<DemoBlock Code="@CS.LabelNoFor">
+    <Preview>
+        <NBLabel>Section title (no bound input)</NBLabel>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>For</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>ID of the associated input element.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Label text.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>

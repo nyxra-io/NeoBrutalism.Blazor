@@ -1,0 +1,106 @@
+@page "/components/navigation-menu"
+
+<NBTitle Variant="@NBTitleVariant.Title">Navigation Menu</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A horizontal navigation bar with expandable mega-menu content.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.NavigationMenuDefault">
+    <Preview>
+        <NBNavigationMenu>
+            <NBNavigationMenuItem Label="Getting Started">
+                <Content>
+                    <NBNavigationMenuLink Href="/getting-started">Installation</NBNavigationMenuLink>
+                    <NBNavigationMenuLink Href="/theming">Theming</NBNavigationMenuLink>
+                </Content>
+            </NBNavigationMenuItem>
+            <NBNavigationMenuItem Label="Components">
+                <Content>
+                    <NBNavigationMenuLink Href="/components/button">Button</NBNavigationMenuLink>
+                    <NBNavigationMenuLink Href="/components/card">Card</NBNavigationMenuLink>
+                    <NBNavigationMenuLink Href="/components/dialog">Dialog</NBNavigationMenuLink>
+                </Content>
+            </NBNavigationMenuItem>
+            <NBNavigationMenuItem Label="GitHub" Href="https://github.com" />
+        </NBNavigationMenu>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.SubSection">NBNavigationMenu</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Navigation items.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.SubSection">NBNavigationMenuItem</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Label</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Display text. Required.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Content</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Expandable dropdown content.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Href</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Direct link (when no Content).</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.SubSection">NBNavigationMenuLink</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Href</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Link URL. Required.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Link text.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>

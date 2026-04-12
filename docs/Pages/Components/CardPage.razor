@@ -1,0 +1,90 @@
+@page "/components/card"
+
+<NBTitle Variant="@NBTitleVariant.Title">Card</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A composable bordered container built from sub-components.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.CardDefault">
+    <Preview>
+        <NBCard>
+            <NBCardHeader>
+                <NBCardTitle>Invoice #1042</NBCardTitle>
+                <NBCardDescription>Due May 31 2025</NBCardDescription>
+            </NBCardHeader>
+            <NBCardContent>
+                <p>Total amount: <strong>$2,400.00</strong></p>
+            </NBCardContent>
+            <NBCardFooter>
+                <NBButton>Pay now</NBButton>
+            </NBCardFooter>
+        </NBCard>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Clickable</NBTitle>
+<DemoBlock Code="@CS.CardClickable">
+    <Preview>
+        <NBCard OnClick="@(() => {})">
+            <NBCardContent>
+                <p>Click me! (cursor: pointer + hover lift)</p>
+            </NBCardContent>
+        </NBCard>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">With action in header</NBTitle>
+<DemoBlock Code="@CS.CardWithAction">
+    <Preview>
+        <NBCard>
+            <NBCardHeader>
+                <NBCardTitle>Team members</NBCardTitle>
+                <NBCardAction>
+                    <NBButton Variant="@NBButtonVariant.NoShadow" Size="@NBButtonSize.Small">Invite</NBButton>
+                </NBCardAction>
+            </NBCardHeader>
+            <NBCardContent>
+                <p>Alice, Bob, Charlie</p>
+            </NBCardContent>
+        </NBCard>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Sub-components</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Component</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>NBCard</code></NBTableCell>
+                <NBTableCell>Root container.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>NBCardHeader</code></NBTableCell>
+                <NBTableCell>Flex row for title + description + action.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>NBCardTitle</code></NBTableCell>
+                <NBTableCell>Bold heading inside the header.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>NBCardDescription</code></NBTableCell>
+                <NBTableCell>Muted subtitle inside the header.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>NBCardAction</code></NBTableCell>
+                <NBTableCell>Right-aligned slot inside the header.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>NBCardContent</code></NBTableCell>
+                <NBTableCell>Main body area with padding.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>NBCardFooter</code></NBTableCell>
+                <NBTableCell>Bottom area, border-top separator.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>

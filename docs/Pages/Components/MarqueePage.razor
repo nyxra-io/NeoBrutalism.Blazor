@@ -1,0 +1,57 @@
+@page "/components/marquee"
+
+<NBTitle Variant="@NBTitleVariant.Title">Marquee</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">An infinite scrolling text strip with neo-brutalism styling.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.MarqueeDefault">
+    <Preview>
+        <NBMarquee Items="@(new[] { "Neobrutalism", "Blazor", "Components", "Open Source", "Tailwind" })" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Pause on hover</NBTitle>
+<DemoBlock Code="@CS.MarqueePauseHover">
+    <Preview>
+        <NBMarquee Items="@(new[] { "Hover me!", "I will pause", "Then continue" })"
+                   PauseOnHover="true" Speed="15s" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Items</code></NBTableCell>
+                <NBTableCell><code>IReadOnlyList&lt;string&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Text items to scroll. Required.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Speed</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell><code>"20s"</code></NBTableCell>
+                <NBTableCell>CSS duration for one full loop.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>PauseOnHover</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Pause animation on mouse hover.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Reverse</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Reverse scroll direction.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>

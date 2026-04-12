@@ -1,0 +1,34 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Sidebar Provider — wraps app content and manages sidebar state *@
+
+<CascadingValue Value="this">
+    <div class="nb-sidebar-wrapper @(Open ? "nb-sidebar-wrapper--open" : "nb-sidebar-wrapper--closed")"
+         style="--nb-sidebar-width: @Width; --nb-sidebar-width-icon: @IconWidth;">
+        @ChildContent
+    </div>
+</CascadingValue>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool Open { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<bool> OpenChanged { get; set; }
+
+    [Parameter]
+    public string Width { get; set; } = "16rem";
+
+    [Parameter]
+    public string IconWidth { get; set; } = "3rem";
+
+    public string State => Open ? "expanded" : "collapsed";
+
+    public async Task ToggleSidebar()
+    {
+        Open = !Open;
+        await OpenChanged.InvokeAsync(Open);
+    }
+}

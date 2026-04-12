@@ -1,0 +1,9 @@
+@namespace NeoBrutalism.Blazor
+@* Menu Bar Shortcut *@
+
+<span class="nb-menubar__shortcut">@ChildContent</span>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

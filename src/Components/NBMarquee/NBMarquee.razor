@@ -1,0 +1,32 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Marquee — infinite scrolling text strip *@
+
+<div class="nb-marquee @(PauseOnHover ? "nb-marquee--pause-hover" : "")"
+     style="--nb-marquee-speed: @Speed">
+    <div class="nb-marquee__track">
+        @foreach (var item in Items)
+        {
+            <span class="nb-marquee__item">@item</span>
+        }
+    </div>
+    <div class="nb-marquee__track" aria-hidden="true">
+        @foreach (var item in Items)
+        {
+            <span class="nb-marquee__item">@item</span>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<string> Items { get; set; } = [];
+
+    [Parameter]
+    public string Speed { get; set; } = "20s";
+
+    [Parameter]
+    public bool PauseOnHover { get; set; }
+
+    [Parameter]
+    public bool Reverse { get; set; }
+}

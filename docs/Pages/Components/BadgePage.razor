@@ -1,0 +1,52 @@
+@page "/components/badge"
+
+<NBTitle Variant="@NBTitleVariant.Title">Badge</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A small inline label for statuses, counts, and categories.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Variants</NBTitle>
+<DemoBlock Code="@CS.BadgeVariants">
+    <Preview>
+        <div style="display:flex;gap:10px;align-items:center">
+            <NBBadge Variant="@NBBadgeVariant.Default">Default</NBBadge>
+            <NBBadge Variant="@NBBadgeVariant.Neutral">Neutral</NBBadge>
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Inside other components</NBTitle>
+<DemoBlock Code="@CS.BadgeInButton">
+    <Preview>
+        <NBButton>
+            Notifications <span style="margin-left:6px"><NBBadge>3</NBBadge></span>
+        </NBButton>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Variant</code></NBTableCell>
+                <NBTableCell><code>NBBadgeVariant</code></NBTableCell>
+                <NBTableCell><code>Default</code></NBTableCell>
+                <NBTableCell>Visual variant.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Badge text or icon.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">Enum</NBTitle>
+<CodeBlock Code="@CS.BadgeEnum" />

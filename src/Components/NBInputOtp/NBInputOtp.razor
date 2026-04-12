@@ -1,0 +1,130 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Input OTP — one-time password input slots *@
+
+<div class="nb-input-otp @(Disabled ? "nb-input-otp--disabled" : "")">
+    @for (var i = 0; i < Length; i++)
+    {
+        var idx = i;
+        var ch = idx < _chars.Length ? _chars[idx].ToString() : "";
+        <div class="nb-input-otp__slot @(_focusedIndex == idx ? "nb-input-otp__slot--active" : "")">
+            @if (!string.IsNullOrEmpty(ch))
+            {
+                <span>@ch</span>
+            }
+            else if (_focusedIndex == idx)
+            {
+                <div class="nb-input-otp__caret"></div>
+            }
+            <input class="nb-input-otp__hidden-input"
+                   type="text"
+                   inputmode="numeric"
+                   maxlength="1"
+                   autocomplete="one-time-code"
+                   disabled="@Disabled"
+                   value="@ch"
+                   @ref="_inputs[idx]"
+                   @onfocus="() => HandleFocus(idx)"
+                   @onblur="HandleBlur"
+                   @oninput="e => HandleInput(idx, e)"
+                   @onkeydown="e => HandleKeyDown(idx, e)" />
+        </div>
+    }
+</div>
+
+@code {
+    private string _chars = string.Empty;
+    private int _focusedIndex = -1;
+    private ElementReference[] _inputs = [];
+
+    [Parameter]
+    public int Length { get; set; } = 6;
+
+    [Parameter]
+    public string? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    protected override void OnInitialized()
+    {
+        _inputs = new ElementReference[Length];
+        _chars = Value ?? string.Empty;
+    }
+
+    protected override void OnParametersSet()
+    {
+        _chars = Value ?? string.Empty;
+    }
+
+    private void HandleFocus(int index) => _focusedIndex = index;
+
+    private void HandleBlur() => _focusedIndex = -1;
+
+    private async Task HandleInput(int index, ChangeEventArgs e)
+    {
+        var val = e.Value?.ToString() ?? "";
+
+        // Handle paste (multiple characters)
+        if (val.Length > 1)
+        {
+            var pasted = val.Length > Length ? val[..Length] : val;
+            _chars = pasted;
+            await NotifyValueChanged();
+            var nextIdx = Math.Min(pasted.Length, Length - 1);
+            await FocusSlot(nextIdx);
+            return;
+        }
+
+        // Single character
+        if (val.Length == 1 && char.IsLetterOrDigit(val[0]))
+        {
+            var arr = _chars.PadRight(Length).ToCharArray();
+            arr[index] = val[0];
+            _chars = new string(arr).TrimEnd();
+            await NotifyValueChanged();
+            if (index < Length - 1)
+                await FocusSlot(index + 1);
+        }
+    }
+
+    private async Task HandleKeyDown(int index, KeyboardEventArgs e)
+    {
+        if (e.Key == "Backspace")
+        {
+            if (index < _chars.Length && _chars[index] != ' ')
+            {
+                var arr = _chars.PadRight(Length).ToCharArray();
+                arr[index] = ' ';
+                _chars = new string(arr).TrimEnd();
+                await NotifyValueChanged();
+            }
+            else if (index > 0)
+            {
+                await FocusSlot(index - 1);
+            }
+        }
+        else if (e.Key == "ArrowLeft" && index > 0)
+        {
+            await FocusSlot(index - 1);
+        }
+        else if (e.Key == "ArrowRight" && index < Length - 1)
+        {
+            await FocusSlot(index + 1);
+        }
+    }
+
+    [ExcludeFromCodeCoverage]
+    private async Task FocusSlot(int index)
+    {
+        _focusedIndex = index;
+        await _inputs[index].FocusAsync();
+    }
+
+    private async Task NotifyValueChanged()
+    {
+        await ValueChanged.InvokeAsync(_chars.Trim());
+    }
+}

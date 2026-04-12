@@ -1,0 +1,102 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Carousel — slide-based content viewer *@
+
+<div class="nb-carousel nb-carousel--@Orientation.ToString().ToLowerInvariant()"
+     role="region" aria-roledescription="carousel" @onkeydown="HandleKeyDown" tabindex="0">
+    <div class="nb-carousel__viewport">
+        <div class="nb-carousel__container"
+             style="transform: @GetTransform(); transition: transform 0.3s ease;">
+            @ChildContent
+        </div>
+    </div>
+    <button type="button" class="nb-carousel__btn nb-carousel__btn-prev nb-btn nb-btn--noshadow nb-btn--icon"
+            disabled="@(!CanGoPrev)" @onclick="Previous" aria-label="Previous slide">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m15 18-6-6 6-6" />
+        </svg>
+    </button>
+    <button type="button" class="nb-carousel__btn nb-carousel__btn-next nb-btn nb-btn--noshadow nb-btn--icon"
+            disabled="@(!CanGoNext)" @onclick="Next" aria-label="Next slide">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m9 18 6-6-6-6" />
+        </svg>
+    </button>
+</div>
+
+@code {
+    private int _current;
+    private int _totalSlides;
+    private Timer? _autoPlayTimer;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public NBCarouselOrientation Orientation { get; set; } = NBCarouselOrientation.Horizontal;
+
+    [Parameter]
+    public bool AutoPlay { get; set; }
+
+    [Parameter]
+    public int AutoPlayInterval { get; set; } = 3000;
+
+    [Parameter]
+    public int SlideCount { get; set; } = 1;
+
+    private bool CanGoPrev => _current > 0;
+    private bool CanGoNext => _current < SlideCount - 1;
+
+    protected override void OnParametersSet()
+    {
+        _totalSlides = SlideCount;
+        if (_current >= _totalSlides) _current = Math.Max(0, _totalSlides - 1);
+    }
+
+    [ExcludeFromCodeCoverage]
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender && AutoPlay && _totalSlides > 1)
+        {
+            _autoPlayTimer = new Timer(_ => InvokeAsync(() =>
+            {
+                _current = (_current + 1) % _totalSlides;
+                StateHasChanged();
+            }), null, AutoPlayInterval, AutoPlayInterval);
+        }
+    }
+
+    private void Previous()
+    {
+        if (CanGoPrev) _current--;
+    }
+
+    private void Next()
+    {
+        if (CanGoNext) _current++;
+    }
+
+    private void HandleKeyDown(KeyboardEventArgs e)
+    {
+        if ((e.Key == "ArrowLeft" && Orientation == NBCarouselOrientation.Horizontal)
+            || (e.Key == "ArrowUp" && Orientation == NBCarouselOrientation.Vertical))
+            Previous();
+        else if ((e.Key == "ArrowRight" && Orientation == NBCarouselOrientation.Horizontal)
+            || (e.Key == "ArrowDown" && Orientation == NBCarouselOrientation.Vertical))
+            Next();
+    }
+
+    private string GetTransform()
+    {
+        var axis = Orientation == NBCarouselOrientation.Horizontal ? "X" : "Y";
+        var pct = -_current * 100;
+        return $"translate{axis}({pct}%)";
+    }
+
+    [ExcludeFromCodeCoverage]
+    public void Dispose()
+    {
+        _autoPlayTimer?.Dispose();
+    }
+}

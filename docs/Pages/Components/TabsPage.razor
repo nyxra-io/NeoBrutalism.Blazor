@@ -1,0 +1,57 @@
+@page "/components/tabs"
+
+<NBTitle Variant="@NBTitleVariant.Title">Tabs</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">Tabbed navigation backed by a list of <code>NBTabItem</code> records.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.TabsDefault">
+    <Preview>
+        <NBTabs Items="_tabs" @bind-ActiveKey="_activeTab" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Items</code> *</NBTableCell>
+                <NBTableCell><code>IReadOnlyList&lt;NBTabItem&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Tab definitions.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ActiveKey</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>first key</NBTableCell>
+                <NBTableCell>Currently active tab key (bindable).</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ActiveKeyChanged</code></NBTableCell>
+                <NBTableCell><code>EventCallback&lt;string&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Two-way binding callback.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">NBTabItem</NBTitle>
+<CodeBlock Code="@CS.TabsRecord" />
+
+@code {
+    private string _activeTab = "overview";
+
+    private readonly List<NBTabItem> _tabs =
+    [
+        new("overview", "Overview", @<p>Product overview content goes here.</p>),
+        new("specs",    "Specs",    @<p>Technical specifications.</p>),
+        new("reviews",  "Reviews",  @<p>User reviews and ratings.</p>)
+    ];
+}

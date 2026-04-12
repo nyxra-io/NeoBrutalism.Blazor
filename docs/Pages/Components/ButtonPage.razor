@@ -1,0 +1,100 @@
+@page "/components/button"
+
+<NBTitle Variant="@NBTitleVariant.Title">Button</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">The primary action element. Six variants, four sizes, full keyboard and disabled support.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Variants</NBTitle>
+<DemoBlock Code="@CS.ButtonVariants">
+    <Preview>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <NBButton Variant="@NBButtonVariant.Default">Default</NBButton>
+            <NBButton Variant="@NBButtonVariant.Neutral">Neutral</NBButton>
+            <NBButton Variant="@NBButtonVariant.Reverse">Reverse</NBButton>
+            <NBButton Variant="@NBButtonVariant.NoShadow">No Shadow</NBButton>
+            <NBButton Variant="@NBButtonVariant.Danger">Danger</NBButton>
+            <NBButton Variant="@NBButtonVariant.Success">Success</NBButton>
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Sizes</NBTitle>
+<DemoBlock Code="@CS.ButtonSizes">
+    <Preview>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+            <NBButton Size="@NBButtonSize.Small">Small</NBButton>
+            <NBButton Size="@NBButtonSize.Normal">Normal</NBButton>
+            <NBButton Size="@NBButtonSize.Large">Large</NBButton>
+            <NBButton Size="@NBButtonSize.Icon">&#x2715;</NBButton>
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Disabled</NBTitle>
+<DemoBlock Code="@CS.ButtonDisabled">
+    <Preview>
+        <div style="display:flex;gap:10px">
+            <NBButton Disabled="true">Cannot click</NBButton>
+            <NBButton Variant="@NBButtonVariant.Neutral" Disabled="true">Neutral disabled</NBButton>
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">With onClick handler</NBTitle>
+<DemoBlock Code="@CS.ButtonOnClick">
+    <Preview>
+        <NBButton OnClick="@HandleClick">Click me</NBButton>
+        <p style="margin-top:10px;font-size:14px">Clicked: @_count times</p>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Variant</code></NBTableCell>
+                <NBTableCell><code>NBButtonVariant</code></NBTableCell>
+                <NBTableCell><code>Default</code></NBTableCell>
+                <NBTableCell>Visual variant.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Size</code></NBTableCell>
+                <NBTableCell><code>NBButtonSize</code></NBTableCell>
+                <NBTableCell><code>Normal</code></NBTableCell>
+                <NBTableCell>Button size.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Disabled</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Disables the button.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>OnClick</code></NBTableCell>
+                <NBTableCell><code>EventCallback</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Click handler.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Button label or icon content.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">Enums</NBTitle>
+<CodeBlock Code="@CS.ButtonEnums" />
+
+@code {
+    private int _count;
+    private void HandleClick() => _count++;
+}

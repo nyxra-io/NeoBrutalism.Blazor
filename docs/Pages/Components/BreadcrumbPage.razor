@@ -1,0 +1,56 @@
+@page "/components/breadcrumb"
+
+<NBTitle Variant="@NBTitleVariant.Title">Breadcrumb</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">Navigation trail backed by a list of <code>NBBreadcrumbItem</code> records.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.BreadcrumbDefault">
+    <Preview>
+        <NBBreadcrumb Items="_items" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Two levels</NBTitle>
+<DemoBlock Code="@CS.BreadcrumbTwoLevels">
+    <Preview>
+        <NBBreadcrumb Items="_twoLevels" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Items</code> *</NBTableCell>
+                <NBTableCell><code>IReadOnlyList&lt;NBBreadcrumbItem&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Ordered list of crumb items.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">NBBreadcrumbItem</NBTitle>
+<CodeBlock Code="@CS.BreadcrumbRecord" />
+
+@code {
+    private readonly List<NBBreadcrumbItem> _items =
+    [
+        new("Home", "/"),
+        new("Products", "/products"),
+        new("Widget Pro", null)
+    ];
+
+    private readonly List<NBBreadcrumbItem> _twoLevels =
+    [
+        new("Home", "/"),
+        new("About", null)
+    ];
+}

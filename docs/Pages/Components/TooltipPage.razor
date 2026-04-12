@@ -1,0 +1,68 @@
+@page "/components/tooltip"
+
+<NBTitle Variant="@NBTitleVariant.Title">Tooltip</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">CSS-only hover tooltip that appears on four sides.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Sides</NBTitle>
+<DemoBlock Code="@CS.TooltipSides">
+    <Preview>
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;padding:32px">
+            <NBTooltip Text="Top tooltip" Side="@NBTooltipSide.Top">
+                <NBButton Variant="@NBButtonVariant.Neutral">Top</NBButton>
+            </NBTooltip>
+            <NBTooltip Text="Bottom tooltip" Side="@NBTooltipSide.Bottom">
+                <NBButton Variant="@NBButtonVariant.Neutral">Bottom</NBButton>
+            </NBTooltip>
+            <NBTooltip Text="Left tooltip" Side="@NBTooltipSide.Left">
+                <NBButton Variant="@NBButtonVariant.Neutral">Left</NBButton>
+            </NBTooltip>
+            <NBTooltip Text="Right tooltip" Side="@NBTooltipSide.Right">
+                <NBButton Variant="@NBButtonVariant.Neutral">Right</NBButton>
+            </NBTooltip>
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">On any element</NBTitle>
+<DemoBlock Code="@CS.TooltipAny">
+    <Preview>
+        <NBTooltip Text="Copy to clipboard">
+            <button style="background:none;border:none;cursor:pointer;font-size:20px">&#x1F4CB;</button>
+        </NBTooltip>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Text</code> *</NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Tooltip text content.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Side</code></NBTableCell>
+                <NBTableCell><code>NBTooltipSide</code></NBTableCell>
+                <NBTableCell><code>Top</code></NBTableCell>
+                <NBTableCell>Which side the tooltip appears on.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>The trigger element.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">Enum</NBTitle>
+<CodeBlock Code="@CS.TooltipEnum" />

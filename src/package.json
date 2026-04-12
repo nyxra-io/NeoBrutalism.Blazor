@@ -1,0 +1,11 @@
+{
+  "name": "neobrutalism.blazor",
+  "private": true,
+  "description": "Tailwind CSS build tooling for NeoBrutalism.Blazor",
+  "scripts": {},
+  "license": "MIT",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.2",
+    "tailwindcss": "^4.2.2"
+  }
+}

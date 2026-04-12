@@ -1,0 +1,11 @@
+@namespace NeoBrutalism.Blazor
+@* Sidebar Inset — main content area next to sidebar *@
+
+<main class="nb-sidebar-inset">
+    @ChildContent
+</main>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

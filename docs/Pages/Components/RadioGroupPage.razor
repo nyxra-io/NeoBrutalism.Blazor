@@ -1,0 +1,79 @@
+@page "/components/radio-group"
+
+<NBTitle Variant="@NBTitleVariant.Title">Radio Group</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">Mutually exclusive options backed by <code>IEnumerable&lt;NBRadioOption&gt;</code>.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.RadioGroupDefault">
+    <Preview>
+        <NBRadioGroup Options="_sizes" @bind-Value="_size" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">With disabled option</NBTitle>
+<DemoBlock Code="@CS.RadioGroupDisabledOption">
+    <Preview>
+        <NBRadioGroup Options="_plans" @bind-Value="_plan" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Entire group disabled</NBTitle>
+<DemoBlock Code="@CS.RadioGroupAllDisabled">
+    <Preview>
+        <NBRadioGroup Options="_sizes" Value="sm" Disabled="true" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Options</code> *</NBTableCell>
+                <NBTableCell><code>IEnumerable&lt;NBRadioOption&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>The radio options to render.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Value</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Selected value (bindable).</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Disabled</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Disables all options.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">NBRadioOption</NBTitle>
+<CodeBlock Code="@CS.RadioRecord" />
+
+@code {
+    private string? _size = "md";
+    private string? _plan = "pro";
+
+    private readonly List<NBRadioOption> _sizes =
+    [
+        new("sm", "Small"),
+        new("md", "Medium"),
+        new("lg", "Large")
+    ];
+
+    private readonly List<NBRadioOption> _plans =
+    [
+        new("free", "Free"),
+        new("pro", "Pro"),
+        new("enterprise", "Enterprise (Coming soon)", Disabled: true)
+    ];
+}

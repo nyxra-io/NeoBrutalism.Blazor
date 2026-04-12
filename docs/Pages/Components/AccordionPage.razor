@@ -1,0 +1,85 @@
+@page "/components/accordion"
+
+<NBTitle Variant="@NBTitleVariant.Title">Accordion</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">Vertically stacked collapsible sections. Each item manages its own open state.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.AccordionDefault">
+    <Preview>
+        <NBAccordion>
+            <NBAccordionItem Header="What is NeoBrutalism Blazor?" @bind-IsOpen="_open1">
+                NeoBrutalism Blazor is a Neo Brutalism component library for Blazor.
+            </NBAccordionItem>
+            <NBAccordionItem Header="How do I install it?" @bind-IsOpen="_open2">
+                Run <code>dotnet add package NeoBrutalism.Blazor</code> and link the stylesheet.
+            </NBAccordionItem>
+            <NBAccordionItem Header="Does it support theming?" @bind-IsOpen="_open3">
+                Yes — override CSS variables or use <code>NBThemeProvider</code>.
+            </NBAccordionItem>
+        </NBAccordion>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">NBAccordion parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>One or more <code>NBAccordionItem</code> components.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">NBAccordionItem parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Header</code> *</NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Trigger button text.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>IsOpen</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Open/collapsed state (bindable).</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>IsOpenChanged</code></NBTableCell>
+                <NBTableCell><code>EventCallback&lt;bool&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Two-way binding callback.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Expanded content.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private bool _open1 = true;
+    private bool _open2;
+    private bool _open3;
+}

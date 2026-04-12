@@ -1,0 +1,99 @@
+@page "/components/drawer"
+
+<NBTitle Variant="@NBTitleVariant.Title">Drawer</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A slide-over panel (sheet) anchored to the edge of the screen.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.DrawerDefault">
+    <Preview>
+        <NBButton OnClick="() => _open = true">Open drawer</NBButton>
+        <NBDrawer IsVisible="_open" Title="Cart" Description="Review your items before checkout." OnClose="@(() => _open = false)">
+            <ChildContent>
+                <p>Item 1 — $12.00</p>
+                <p>Item 2 — $8.50</p>
+            </ChildContent>
+            <Footer>
+                <NBButton>Checkout — $20.50</NBButton>
+            </Footer>
+        </NBDrawer>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Left side</NBTitle>
+<DemoBlock Code="@CS.DrawerHeaderExtra">
+    <Preview>
+        <NBButton OnClick="() => _open2 = true">Open left drawer</NBButton>
+        <NBDrawer IsVisible="_open2" Title="Filters" Side="@NBDrawerSide.Left" OnClose="@(() => _open2 = false)">
+            <ChildContent>
+                <p>Filter controls here…</p>
+            </ChildContent>
+        </NBDrawer>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>IsVisible</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Controls drawer visibility.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Title</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Header title text.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Description</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Description text below the title.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Drawer body content.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Footer</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Footer content.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Side</code></NBTableCell>
+                <NBTableCell><code>NBDrawerSide</code></NBTableCell>
+                <NBTableCell><code>Right</code></NBTableCell>
+                <NBTableCell>Which edge the drawer slides from.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>OnClose</code></NBTableCell>
+                <NBTableCell><code>EventCallback</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Called when close button or backdrop is tapped.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>CloseOnBackdrop</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>true</code></NBTableCell>
+                <NBTableCell>Close when backdrop is clicked.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private bool _open;
+    private bool _open2;
+}

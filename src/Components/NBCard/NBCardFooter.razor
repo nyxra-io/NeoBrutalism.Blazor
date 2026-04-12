@@ -1,0 +1,11 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Card Footer *@
+
+<div class="nb-card__footer">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

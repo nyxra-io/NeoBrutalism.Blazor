@@ -1,0 +1,25 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Sidebar — the sidebar panel itself *@
+
+<aside class="nb-sidebar nb-sidebar--@Side.ToString().ToLowerInvariant() nb-sidebar--@(Provider?.State ?? "expanded") nb-sidebar--@Variant.ToString().ToLowerInvariant()"
+       data-collapsible="@Collapsible.ToString().ToLowerInvariant()"
+       role="complementary">
+    @ChildContent
+</aside>
+
+@code {
+    [CascadingParameter]
+    public NBSidebarProvider? Provider { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public NBSidebarSide Side { get; set; } = NBSidebarSide.Left;
+
+    [Parameter]
+    public NBSidebarVariant Variant { get; set; } = NBSidebarVariant.Sidebar;
+
+    [Parameter]
+    public NBSidebarCollapsible Collapsible { get; set; } = NBSidebarCollapsible.Offcanvas;
+}

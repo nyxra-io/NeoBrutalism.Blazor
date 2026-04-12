@@ -1,0 +1,48 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Tabs — container that manages active tab state *@
+
+<div class="nb-tabs">
+    <div class="nb-tabs-list" role="tablist">
+        @foreach (var item in Items)
+        {
+            <button type="button"
+                    role="tab"
+                    id="@($"nb-tab-{item.Key}")"
+                    aria-selected="@(ActiveKey == item.Key)"
+                    aria-controls="@($"nb-tabpanel-{item.Key}")"
+                    class="nb-tabs-trigger @(ActiveKey == item.Key ? "nb-tabs-trigger--active" : "")"
+                    @onclick="() => SetActive(item.Key)">
+                @item.Label
+            </button>
+        }
+    </div>
+    <div class="nb-tabs-content" role="tabpanel"
+         id="@($"nb-tabpanel-{ActiveKey}")"
+         aria-labelledby="@($"nb-tab-{ActiveKey}")">
+        @Items.FirstOrDefault(x => x.Key == ActiveKey)?.Content
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public IReadOnlyList<NBTabItem> Items { get; set; } = [];
+
+    [Parameter]
+    public string ActiveKey { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback<string> ActiveKeyChanged { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        // Fallback al primo tab se ActiveKey non è valido o non corrisponde a nessun item
+        if ((string.IsNullOrEmpty(ActiveKey) || !Items.Any(x => x.Key == ActiveKey)) && Items.Count > 0)
+            ActiveKey = Items[0].Key;
+    }
+
+    private async Task SetActive(string key)
+    {
+        ActiveKey = key;
+        await ActiveKeyChanged.InvokeAsync(key);
+    }
+}

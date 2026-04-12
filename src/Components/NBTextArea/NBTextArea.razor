@@ -1,0 +1,51 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism TextArea Component *@
+
+<div class="nb-field">
+<NBLabel For="@Id">@Label</NBLabel>
+<textarea
+    id="@Id"
+    class="nb-textarea"
+    rows="@Rows"
+    placeholder="@Placeholder"
+    disabled="@Disabled"
+    @oninput="OnInput">@Value</textarea>
+@if (Actions is not null)
+{
+    <div class="nb-textarea__actions">
+        @Actions
+    </div>
+}
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Id { get; set; } = string.Empty;
+
+    [Parameter]
+    public string? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<string?> ValueChanged { get; set; }
+
+    [Parameter]
+    public int Rows { get; set; } = 4;
+
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public RenderFragment? Actions { get; set; }
+
+    private async Task OnInput(ChangeEventArgs e)
+    {
+        var value = e.Value?.ToString();
+        await ValueChanged.InvokeAsync(value);
+    }
+}

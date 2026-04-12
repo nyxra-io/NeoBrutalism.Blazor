@@ -1,0 +1,19 @@
+@namespace NeoBrutalism.Blazor
+
+<button type="button" class="nb-sidebar__menu-btn @(IsActive ? "nb-sidebar__menu-btn--active" : "")"
+        @onclick="HandleClick">
+    @ChildContent
+</button>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool IsActive { get; set; }
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    private async Task HandleClick() => await OnClick.InvokeAsync();
+}

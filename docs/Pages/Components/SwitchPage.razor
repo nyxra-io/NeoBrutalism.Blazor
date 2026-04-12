@@ -1,0 +1,73 @@
+@page "/components/switch"
+
+<NBTitle Variant="@NBTitleVariant.Title">Switch</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A toggle switch with a CSS-only track and thumb.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.SwitchDefault">
+    <Preview>
+        <NBSwitch @bind-Checked="_on" Label="Enable notifications" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">On by default</NBTitle>
+<DemoBlock Code="@CS.SwitchOn">
+    <Preview>
+        <NBSwitch @bind-Checked="_on2" Label="Dark mode" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Without label</NBTitle>
+<DemoBlock Code="@CS.SwitchNoLabel">
+    <Preview>
+        <NBSwitch @bind-Checked="_on3" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Disabled</NBTitle>
+<DemoBlock Code="@CS.SwitchDisabled">
+    <Preview>
+        <div style="display:flex;flex-direction:column;gap:8px">
+            <NBSwitch Label="Disabled off" Disabled="true" />
+            <NBSwitch Label="Disabled on" Checked="true" Disabled="true" />
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Checked</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Toggle state (bindable).</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Label</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Text shown next to the switch.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Disabled</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Disables the switch.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private bool _on;
+    private bool _on2 = true;
+    private bool _on3;
+}

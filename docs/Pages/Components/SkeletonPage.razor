@@ -1,0 +1,70 @@
+@page "/components/skeleton"
+
+<NBTitle Variant="@NBTitleVariant.Title">Skeleton</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">Animated placeholder shown while content is loading.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Text lines</NBTitle>
+<DemoBlock Code="@CS.SkeletonLines">
+    <Preview>
+        <div style="display:flex;flex-direction:column;gap:10px;width:100%">
+            <NBSkeleton Width="60%" Height="20px" />
+            <NBSkeleton Width="90%" Height="16px" />
+            <NBSkeleton Width="75%" Height="16px" />
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Card placeholder</NBTitle>
+<DemoBlock Code="@CS.SkeletonCard">
+    <Preview>
+        <div style="max-width:480px;width:100%">
+            <NBCard>
+                <NBCardHeader>
+                    <NBCardTitle><NBSkeleton Width="70%" Height="22px" /></NBCardTitle>
+                    <NBCardDescription><NBSkeleton Width="50%" Height="16px" /></NBCardDescription>
+                </NBCardHeader>
+                <NBCardContent>
+                    <div style="display:flex;flex-direction:column;gap:10px;width:100%">
+                        <NBSkeleton Width="100%" Height="16px" />
+                        <NBSkeleton Width="90%" Height="16px" />
+                        <NBSkeleton Width="75%" Height="16px" />
+                        <NBSkeleton Width="60%" Height="16px" />
+                    </div>
+                </NBCardContent>
+            </NBCard>
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Avatar placeholder</NBTitle>
+<DemoBlock Code="@CS.SkeletonAvatar">
+    <Preview>
+        <NBSkeleton Width="40px" Height="40px" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Width</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>CSS width value.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Height</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>CSS height value.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>

@@ -1,0 +1,137 @@
+trigger:
+  branches:
+    include:
+      - main
+
+name: '${{ parameters.packageVersion }}'
+
+parameters:
+  - name: packageVersion
+    displayName: 'Package version (SemVer, e.g. 1.2.0)'
+    type: string
+    default: '0.0.0'
+
+variables:
+  buildConfiguration: 'Release'
+
+stages:
+  # ──────────────────────────────────────────────
+  # Stage 0 — Test & Coverage (every push to main)
+  # ──────────────────────────────────────────────
+  - stage: Test
+    displayName: 'Test & Coverage'
+    pool:
+      vmImage: 'ubuntu-latest'
+    jobs:
+      - job: RunTests
+        displayName: 'Run Tests & Publish Coverage'
+        steps:
+          - task: UseDotNet@2
+            displayName: 'Install .NET SDK'
+            inputs:
+              packageType: 'sdk'
+              version: '10.x'
+              includePreviewVersions: true
+
+          - script: npm ci --prefix src
+            displayName: 'Install Node dependencies (Tailwind)'
+
+          - script: dotnet test tests/NeoBrutalism.Blazor.Tests.csproj -c $(buildConfiguration) --collect:"XPlat Code Coverage" --results-directory $(Agent.TempDirectory)/coverage
+            displayName: 'Run Tests with Coverage'
+
+          - task: PublishCodeCoverageResults@2
+            displayName: 'Publish Coverage to DevOps'
+            inputs:
+              summaryFileLocation: '$(Agent.TempDirectory)/coverage/**/coverage.cobertura.xml'
+
+  # ──────────────────────────────────────────────
+  # Stage 1 — Build, pack & publish NuGet package
+  # ──────────────────────────────────────────────
+  - stage: NuGet
+    displayName: 'NuGet — Build & Publish'
+    dependsOn: Test
+    condition: and(succeeded(), ne('${{ parameters.packageVersion }}', '0.0.0'))
+    pool:
+      vmImage: 'ubuntu-latest'
+    jobs:
+      - job: PackAndPush
+        displayName: 'Pack & Push'
+        steps:
+          - checkout: self
+            fetchDepth: 0
+
+          - task: UseDotNet@2
+            displayName: 'Install .NET SDK'
+            inputs:
+              packageType: 'sdk'
+              version: '10.x'
+              includePreviewVersions: true
+
+          - script: npm ci --prefix src
+            displayName: 'Install Node dependencies (Tailwind)'
+
+          - script: dotnet restore src/NeoBrutalism.Blazor.csproj
+            displayName: 'Restore'
+
+          - script: dotnet build src/NeoBrutalism.Blazor.csproj -c $(buildConfiguration) --no-restore
+            displayName: 'Build'
+
+          - script: dotnet pack src/NeoBrutalism.Blazor.csproj -c $(buildConfiguration) --no-build -o $(Build.ArtifactStagingDirectory) /p:Version=${{ parameters.packageVersion }}
+            displayName: 'Pack NuGet'
+
+          - task: NuGetCommand@2
+            displayName: 'Push to NuGet.org'
+            inputs:
+              command: 'push'
+              packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg'
+              nuGetFeedType: 'external'
+              publishFeedCredentials: 'NeoBrutalism.Blazor'
+
+  # ──────────────────────────────────────────────
+  # Stage 2 — Build docs site + API reference zip
+  # ──────────────────────────────────────────────
+  - stage: Docs
+    displayName: 'Docs — Build & Package'
+    dependsOn: Test
+    condition: and(succeeded(), ne('${{ parameters.packageVersion }}', '0.0.0'))
+    pool:
+      vmImage: 'ubuntu-latest'
+    jobs:
+      - job: BuildDocs
+        displayName: 'Build Docs Site'
+        steps:
+          - task: UseDotNet@2
+            displayName: 'Install .NET SDK'
+            inputs:
+              packageType: 'sdk'
+              version: '10.x'
+              includePreviewVersions: true
+
+          - script: dotnet tool install -g docfx
+            displayName: 'Install DocFX'
+
+          - script: npm ci --prefix src
+            displayName: 'Install Node dependencies (Tailwind)'
+
+          - script: docfx metadata docs/docfx/docfx.json
+            displayName: 'DocFX — Extract API metadata'
+
+          - script: docfx build docs/docfx/docfx.json
+            displayName: 'DocFX — Build API docs'
+
+          - script: dotnet publish docs/NeoBrutalism.Blazor.Docs.csproj -c $(buildConfiguration) -o $(Build.BinariesDirectory)/docs-site
+            displayName: 'Publish Blazor WASM docs site'
+
+          - task: ArchiveFiles@2
+            displayName: 'Zip docs site'
+            inputs:
+              rootFolderOrFile: '$(Build.BinariesDirectory)/docs-site/wwwroot'
+              includeRootFolder: false
+              archiveType: 'zip'
+              archiveFile: '$(Build.ArtifactStagingDirectory)/docs-site.zip'
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish docs artifact'
+            inputs:
+              pathToPublish: '$(Build.ArtifactStagingDirectory)/docs-site.zip'
+              artifactName: 'docs'

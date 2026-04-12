@@ -1,0 +1,78 @@
+@page "/components/popover"
+
+<NBTitle Variant="@NBTitleVariant.Title">Popover</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A click-triggered floating content panel.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.PopoverDefault">
+    <Preview>
+        <NBPopover Side="NBPopoverSide.Bottom">
+            <ChildContent>
+                <NBButton Variant="@NBButtonVariant.Neutral">Open Popover</NBButton>
+            </ChildContent>
+            <Content>
+                <p style="margin:0">This is a popover content area.</p>
+            </Content>
+        </NBPopover>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Sides</NBTitle>
+<DemoBlock Code="@CS.PopoverSides">
+    <Preview>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;padding:3rem">
+            <NBPopover Side="NBPopoverSide.Top">
+                <ChildContent><NBButton Variant="@NBButtonVariant.Neutral">Top</NBButton></ChildContent>
+                <Content><p style="margin:0">Top popover</p></Content>
+            </NBPopover>
+            <NBPopover Side="NBPopoverSide.Right">
+                <ChildContent><NBButton Variant="@NBButtonVariant.Neutral">Right</NBButton></ChildContent>
+                <Content><p style="margin:0">Right popover</p></Content>
+            </NBPopover>
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Trigger element.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Content</code></NBTableCell>
+                <NBTableCell><code>RenderFragment</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Popover content. Required.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Side</code></NBTableCell>
+                <NBTableCell><code>NBPopoverSide</code></NBTableCell>
+                <NBTableCell><code>Bottom</code></NBTableCell>
+                <NBTableCell>Position relative to trigger.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>IsOpen</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Controlled open state.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>IsOpenChanged</code></NBTableCell>
+                <NBTableCell><code>EventCallback&lt;bool&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Fires when open state changes.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>

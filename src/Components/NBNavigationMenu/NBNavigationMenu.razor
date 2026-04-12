@@ -1,0 +1,13 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Navigation Menu *@
+
+<nav class="nb-nav-menu" role="navigation">
+    <div class="nb-nav-menu__list" role="menubar">
+        @ChildContent
+    </div>
+</nav>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

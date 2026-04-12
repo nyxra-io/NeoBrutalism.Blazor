@@ -1,0 +1,58 @@
+@page "/components/image-card"
+
+<NBTitle Variant="@NBTitleVariant.Title">Image Card</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A card with an image and a caption separated by a border.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.ImageCardDefault">
+    <Preview>
+        <NBImageCard ImageUrl="https://picsum.photos/seed/nb1/400/300" Caption="A beautiful landscape" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Custom alt text</NBTitle>
+<DemoBlock Code="@CS.ImageCardCustom">
+    <Preview>
+        <NBImageCard ImageUrl="https://picsum.photos/seed/nb2/400/300"
+                     Caption="Custom alt text"
+                     Alt="Mountain view at sunset" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>ImageUrl</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>URL of the image. Required.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Caption</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Caption text below the image. Required.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Alt</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell>Caption value</NBTableCell>
+                <NBTableCell>Alt text for the image.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>AdditionalClass</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Extra CSS class.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>

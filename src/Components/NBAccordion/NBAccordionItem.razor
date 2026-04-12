@@ -1,0 +1,45 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Accordion Item — individual collapsible section *@
+
+<div class="nb-accordion-item @(IsOpen ? "nb-accordion-item--open" : "")">
+    <h3>
+        <button type="button" class="nb-accordion-trigger" id="@_triggerId" @onclick="Toggle"
+                aria-expanded="@IsOpen" aria-controls="@_panelId">
+            <span>@Header</span>
+            <svg class="nb-accordion-trigger__icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="square" stroke-linejoin="miter">
+                <polyline points="6 9 12 15 18 9" />
+            </svg>
+        </button>
+    </h3>
+    @if (IsOpen)
+    {
+        <div class="nb-accordion-content" id="@_panelId" role="region" aria-labelledby="@_triggerId">
+            @ChildContent
+        </div>
+    }
+</div>
+
+@code {
+    private readonly string _triggerId = $"nb-accordion-trigger-{Guid.NewGuid():N}";
+    private readonly string _panelId = $"nb-accordion-panel-{Guid.NewGuid():N}";
+
+    [Parameter, EditorRequired]
+    public string Header { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsOpenChanged { get; set; }
+
+    private async Task Toggle()
+    {
+        IsOpen = !IsOpen;
+        await IsOpenChanged.InvokeAsync(IsOpen);
+    }
+}

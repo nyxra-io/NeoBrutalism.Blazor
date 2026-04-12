@@ -1,0 +1,45 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Button Component *@
+
+<button class="@CssClass" disabled="@Disabled" @onclick="OnClick" @attributes="AdditionalAttributes">
+    @ChildContent
+</button>
+
+@code {
+    [Parameter]
+    public NBButtonVariant Variant { get; set; } = NBButtonVariant.Default;
+
+    [Parameter]
+    public NBButtonSize Size { get; set; } = NBButtonSize.Normal;
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string CssClass
+    {
+        get
+        {
+            var variant = Variant.ToString().ToLowerInvariant();
+            var css = $"nb-btn nb-btn--{variant}";
+
+            css += Size switch
+            {
+                NBButtonSize.Small => " nb-btn--sm",
+                NBButtonSize.Large => " nb-btn--lg",
+                NBButtonSize.Icon  => " nb-btn--icon",
+                _                  => string.Empty
+            };
+
+            return css;
+        }
+    }
+}

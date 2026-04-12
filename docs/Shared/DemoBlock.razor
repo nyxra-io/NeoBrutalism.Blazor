@@ -1,0 +1,51 @@
+@inject IJSRuntime JS
+
+<div class="docs-demo">
+    <div class="docs-demo__preview @(Column ? "docs-demo__preview--column" : "")">
+        @Preview
+    </div>
+    <div class="docs-demo__code">
+        <button class="docs-demo__copy" @onclick="CopyCode">@_copyLabel</button>
+        @if (CodeContent is not null)
+        {
+            <pre><code class="language-razor" @ref="_codeRef">@CodeContent</code></pre>
+        }
+        else
+        {
+            <pre><code class="language-razor" @ref="_codeRef">@Code</code></pre>
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public RenderFragment Preview { get; set; } = null!;
+    [Parameter] public string Code { get; set; } = string.Empty;
+    [Parameter] public RenderFragment? CodeContent { get; set; }
+    [Parameter] public bool Column { get; set; }
+
+    private string _copyLabel = "Copy";
+    private ElementReference _codeRef;
+    private string _rawCode = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        // For copy, we need raw text. If no CodeContent, use Code directly.
+        // If CodeContent given, copy operation won't have the raw text — acceptable tradeoff.
+        _rawCode = Code;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await JS.InvokeVoidAsync("hljs.highlightElement", _codeRef);
+    }
+
+    private async Task CopyCode()
+    {
+        await JS.InvokeVoidAsync("navigator.clipboard.writeText", _rawCode);
+        _copyLabel = "Copied!";
+        await Task.Delay(1500);
+        _copyLabel = "Copy";
+        StateHasChanged();
+    }
+}

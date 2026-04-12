@@ -1,0 +1,92 @@
+@page "/components/context-menu"
+
+<NBTitle Variant="@NBTitleVariant.Title">Context Menu</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A menu triggered by right-click on an element.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.ContextMenuDefault">
+    <Preview>
+        <NBContextMenu>
+            <ChildContent>
+                <div style="border: 2px dashed #ccc; padding: 2rem; text-align: center;">
+                    Right-click here
+                </div>
+            </ChildContent>
+            <MenuContent>
+                <NBContextMenuLabel>Actions</NBContextMenuLabel>
+                <NBContextMenuSeparator />
+                <NBContextMenuItem>Copy</NBContextMenuItem>
+                <NBContextMenuItem>Paste</NBContextMenuItem>
+                <NBContextMenuSeparator />
+                <NBContextMenuItem Shortcut="⌘Z">Undo</NBContextMenuItem>
+                <NBContextMenuItem Disabled="true">Delete</NBContextMenuItem>
+            </MenuContent>
+        </NBContextMenu>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.SubSection">NBContextMenu</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Trigger area (right-click target).</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>MenuContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Menu items to display. Required.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.SubSection">NBContextMenuItem</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Item label.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>OnClick</code></NBTableCell>
+                <NBTableCell><code>EventCallback</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Click handler.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Disabled</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Disables the item.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Shortcut</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Shortcut hint text.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>

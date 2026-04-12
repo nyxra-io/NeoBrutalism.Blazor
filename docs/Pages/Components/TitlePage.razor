@@ -1,0 +1,53 @@
+@page "/components/title"
+
+<NBTitle Variant="@NBTitleVariant.Title">Title</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">High-level semantic title variants — page title, subtitle, section and sub-section.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">All variants</NBTitle>
+<DemoBlock Code="@CS.TitleAll">
+    <Preview>
+        <NBTitle Variant="@NBTitleVariant.Title">Page title</NBTitle>
+        <NBTitle Variant="@NBTitleVariant.Subtitle">A short description of the page content.</NBTitle>
+        <NBTitle Variant="@NBTitleVariant.Section">Section heading</NBTitle>
+        <NBTitle Variant="@NBTitleVariant.SubSection">Sub-section heading</NBTitle>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Variant</code></NBTableCell>
+                <NBTableCell><code>NBTitleVariant</code></NBTableCell>
+                <NBTableCell><code>Title</code></NBTableCell>
+                <NBTableCell>Semantic variant that controls the rendered element and style.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Content displayed inside the title element.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>AdditionalAttributes</code></NBTableCell>
+                <NBTableCell><code>Dictionary&lt;string, object&gt;?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Additional HTML attributes forwarded to the rendered element.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">Enum</NBTitle>
+<DemoBlock Code="@CS.TitleEnum">
+    <Preview>
+        <p><code>NBTitleVariant</code>: Title, Subtitle, Section, SubSection</p>
+    </Preview>
+</DemoBlock>

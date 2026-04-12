@@ -1,0 +1,114 @@
+@page "/components/select"
+
+<NBTitle Variant="@NBTitleVariant.Title">Select</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">Dropdown picker backed by a list of <code>NBSelectOption</code> records.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.SelectDefault">
+    <Preview>
+        <NBSelect Id="demo-role" Label="Role" @bind-Value="_role"
+                  Placeholder="Choose a role"
+                  Options="_roles" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">With subtitle</NBTitle>
+<DemoBlock Code="@CS.SelectSubtitle">
+    <Preview>
+        <NBSelect Id="demo-country" Label="Country" @bind-Value="_country"
+                  Subtitle="Your billing country."
+                  Options="_countries" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Disabled</NBTitle>
+<DemoBlock Code="@CS.SelectDisabled">
+    <Preview>
+        <NBSelect Id="demo-dis" Label="Plan" Value="pro" Disabled="true" Options="_plans" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Id</code> *</NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>HTML id.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Label</code> *</NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Field label text.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Options</code> *</NBTableCell>
+                <NBTableCell><code>IEnumerable&lt;NBSelectOption&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Option list.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Value</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Currently selected value.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Placeholder</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Disabled first option when value is empty.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Disabled</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Disables the select.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Subtitle</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Helper text below select.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">NBSelectOption</NBTitle>
+<CodeBlock Code="@CS.SelectRecord" />
+
+@code {
+    private string? _role;
+    private string? _country;
+
+    private readonly List<NBSelectOption> _roles =
+    [
+        new("admin", "Administrator"),
+        new("editor", "Editor"),
+        new("viewer", "Viewer")
+    ];
+
+    private readonly List<NBSelectOption> _countries =
+    [
+        new("it", "Italy"),
+        new("de", "Germany"),
+        new("fr", "France")
+    ];
+
+    private readonly List<NBSelectOption> _plans =
+    [
+        new("free", "Free"),
+        new("pro", "Pro"),
+        new("enterprise", "Enterprise")
+    ];
+}

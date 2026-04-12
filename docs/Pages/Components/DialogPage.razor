@@ -1,0 +1,87 @@
+@page "/components/dialog"
+
+<NBTitle Variant="@NBTitleVariant.Title">Dialog</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A modal overlay for confirmations and focused tasks.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.DialogDefault">
+    <Preview>
+        <NBButton OnClick="() => _open = true">Open dialog</NBButton>
+        <NBDialog IsVisible="_open" Title="Delete item?" Description="This action is permanent and cannot be undone." OnClose="@(() => _open = false)">
+            <Footer>
+                <NBButton Variant="@NBButtonVariant.Neutral" OnClick="() => _open = false">Cancel</NBButton>
+                <NBButton Variant="@NBButtonVariant.Danger">Delete</NBButton>
+            </Footer>
+        </NBDialog>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Close on backdrop</NBTitle>
+<DemoBlock Code="@CS.DialogBackdrop">
+    <Preview>
+        <NBButton OnClick="() => _open2 = true">Light dismiss dialog</NBButton>
+        <NBDialog IsVisible="_open2" Title="Light dismiss" Description="Click outside to close." CloseOnBackdrop="true" OnClose="@(() => _open2 = false)">
+        </NBDialog>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>IsVisible</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Controls dialog visibility.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Title</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Dialog title. Hidden if null.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Description</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Description text below the title.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Dialog body content.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Footer</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Footer content (actions).</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>OnClose</code></NBTableCell>
+                <NBTableCell><code>EventCallback</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Fires when close button is clicked.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>CloseOnBackdrop</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Close when backdrop is clicked.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private bool _open;
+    private bool _open2;
+}

@@ -1,0 +1,72 @@
+@namespace NeoBrutalism.Blazor
+@implements IDisposable
+@inject NBSonnerService SonnerService
+@* Neo Brutalism Sonner — toast notification container *@
+
+<div class="nb-sonner nb-sonner--@Position.ToString().ToLowerInvariant()">
+    @foreach (var toast in _toasts)
+    {
+        <div class="nb-sonner__toast nb-sonner__toast--@toast.Variant.ToString().ToLowerInvariant()
+                    @(toast.IsClosing ? "nb-sonner__toast--closing" : "nb-sonner__toast--open")">
+            <div class="nb-sonner__body">
+                <div class="nb-sonner__message">@toast.Message</div>
+                @if (!string.IsNullOrWhiteSpace(toast.Description))
+                {
+                    <div class="nb-sonner__description">@toast.Description</div>
+                }
+            </div>
+            <button type="button" class="nb-sonner__close" aria-label="Close" @onclick="() => DismissToast(toast)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                     fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+                </svg>
+            </button>
+        </div>
+    }
+</div>
+
+@code {
+    private const int AnimDuration = 200;
+    private readonly List<NBToast> _toasts = [];
+
+    [Parameter]
+    public NBSonnerPosition Position { get; set; } = NBSonnerPosition.BottomRight;
+
+    [Parameter]
+    public int MaxToasts { get; set; } = 3;
+
+    protected override void OnInitialized()
+    {
+        SonnerService.OnShow += HandleToast;
+    }
+
+    private void HandleToast(NBToast toast)
+    {
+        InvokeAsync(() =>
+        {
+            _toasts.Add(toast);
+            while (_toasts.Count > MaxToasts)
+                _toasts.RemoveAt(0);
+            StateHasChanged();
+
+            // Auto-dismiss
+            _ = Task.Delay(toast.DurationMs).ContinueWith(_ => InvokeAsync(() => DismissToast(toast)));
+        });
+    }
+
+    [ExcludeFromCodeCoverage]
+    private async Task DismissToast(NBToast toast)
+    {
+        toast.IsClosing = true;
+        StateHasChanged();
+        await Task.Delay(AnimDuration);
+        _toasts.Remove(toast);
+        StateHasChanged();
+    }
+
+    [ExcludeFromCodeCoverage]
+    public void Dispose()
+    {
+        SonnerService.OnShow -= HandleToast;
+    }
+}

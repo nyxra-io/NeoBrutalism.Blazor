@@ -1,0 +1,179 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Calendar — date picker grid *@
+
+<div class="nb-calendar">
+    <div class="nb-calendar__header">
+        <button type="button" class="nb-calendar__nav-btn" @onclick="PreviousMonth" aria-label="Previous month">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
+            </svg>
+        </button>
+        <div class="nb-calendar__title">@_displayMonth.ToString("MMMM yyyy")</div>
+        <button type="button" class="nb-calendar__nav-btn" @onclick="NextMonth" aria-label="Next month">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6" />
+            </svg>
+        </button>
+    </div>
+    <table class="nb-calendar__grid" role="grid">
+        <thead>
+            <tr>
+                @foreach (var name in _dayNames)
+                {
+                    <th class="nb-calendar__head-cell">@name</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var week in GetWeeks())
+            {
+                <tr>
+                    @foreach (var day in week)
+                    {
+                        var d = day;
+                        var isOutside = d.Month != _displayMonth.Month;
+                        var isToday = d.Date == DateTime.Today;
+                        var isSelected = IsDateSelected(d);
+                        var isRangeMiddle = IsInRange(d) && !IsRangeEndpoint(d);
+                        var isRangeStart = Mode == NBCalendarMode.Range && RangeStart.HasValue && d.Date == RangeStart.Value.Date;
+                        var isRangeEnd = Mode == NBCalendarMode.Range && RangeEnd.HasValue && d.Date == RangeEnd.Value.Date;
+                        var isDisabled = (MinDate.HasValue && d.Date < MinDate.Value.Date) || (MaxDate.HasValue && d.Date > MaxDate.Value.Date);
+
+                        <td class="nb-calendar__cell">
+                            <button type="button"
+                                    class="nb-calendar__day
+                                           @(isOutside ? "nb-calendar__day--outside" : "")
+                                           @(isToday ? "nb-calendar__day--today" : "")
+                                           @(isSelected ? "nb-calendar__day--selected" : "")
+                                           @(isRangeStart ? "nb-calendar__day--range-start" : "")
+                                           @(isRangeEnd ? "nb-calendar__day--range-end" : "")
+                                           @(isRangeMiddle ? "nb-calendar__day--range-middle" : "")
+                                           @(isDisabled ? "nb-calendar__day--disabled" : "")"
+                                    disabled="@isDisabled"
+                                    @onclick="() => SelectDate(d)">
+                                @d.Day
+                            </button>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    private DateTime _displayMonth;
+    private static readonly string[] _dayNames = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+
+    [Parameter]
+    public NBCalendarMode Mode { get; set; } = NBCalendarMode.Single;
+
+    [Parameter]
+    public DateTime? SelectedDate { get; set; }
+
+    [Parameter]
+    public EventCallback<DateTime?> SelectedDateChanged { get; set; }
+
+    [Parameter]
+    public DateTime? RangeStart { get; set; }
+
+    [Parameter]
+    public EventCallback<DateTime?> RangeStartChanged { get; set; }
+
+    [Parameter]
+    public DateTime? RangeEnd { get; set; }
+
+    [Parameter]
+    public EventCallback<DateTime?> RangeEndChanged { get; set; }
+
+    [Parameter]
+    public DateTime? MinDate { get; set; }
+
+    [Parameter]
+    public DateTime? MaxDate { get; set; }
+
+    protected override void OnInitialized()
+    {
+        _displayMonth = SelectedDate ?? RangeStart ?? DateTime.Today;
+        _displayMonth = new DateTime(_displayMonth.Year, _displayMonth.Month, 1);
+    }
+
+    private void PreviousMonth() => _displayMonth = _displayMonth.AddMonths(-1);
+    private void NextMonth() => _displayMonth = _displayMonth.AddMonths(1);
+
+    private List<List<DateTime>> GetWeeks()
+    {
+        var firstDay = new DateTime(_displayMonth.Year, _displayMonth.Month, 1);
+        var startOffset = ((int)firstDay.DayOfWeek + 6) % 7; // Monday=0
+        var start = firstDay.AddDays(-startOffset);
+
+        var weeks = new List<List<DateTime>>();
+        var current = start;
+        for (var w = 0; w < 6; w++)
+        {
+            var week = new List<DateTime>();
+            for (var d = 0; d < 7; d++)
+            {
+                week.Add(current);
+                current = current.AddDays(1);
+            }
+            // Only add week if it contains at least one day of current month
+            if (week.Any(d => d.Month == _displayMonth.Month))
+                weeks.Add(week);
+        }
+        return weeks;
+    }
+
+    private bool IsDateSelected(DateTime d)
+    {
+        if (Mode == NBCalendarMode.Single)
+            return SelectedDate.HasValue && d.Date == SelectedDate.Value.Date;
+        return (RangeStart.HasValue && d.Date == RangeStart.Value.Date)
+            || (RangeEnd.HasValue && d.Date == RangeEnd.Value.Date);
+    }
+
+    private bool IsRangeEndpoint(DateTime d)
+    {
+        return (RangeStart.HasValue && d.Date == RangeStart.Value.Date)
+            || (RangeEnd.HasValue && d.Date == RangeEnd.Value.Date);
+    }
+
+    private bool IsInRange(DateTime d)
+    {
+        if (Mode != NBCalendarMode.Range || !RangeStart.HasValue || !RangeEnd.HasValue)
+            return false;
+        return d.Date > RangeStart.Value.Date && d.Date < RangeEnd.Value.Date;
+    }
+
+    private async Task SelectDate(DateTime d)
+    {
+        if (Mode == NBCalendarMode.Single)
+        {
+            await SelectedDateChanged.InvokeAsync(d.Date);
+        }
+        else
+        {
+            if (!RangeStart.HasValue || (RangeStart.HasValue && RangeEnd.HasValue))
+            {
+                // Start new range
+                await RangeStartChanged.InvokeAsync(d.Date);
+                await RangeEndChanged.InvokeAsync(null);
+            }
+            else
+            {
+                // Complete range
+                if (d.Date < RangeStart.Value.Date)
+                {
+                    await RangeEndChanged.InvokeAsync(RangeStart.Value.Date);
+                    await RangeStartChanged.InvokeAsync(d.Date);
+                }
+                else
+                {
+                    await RangeEndChanged.InvokeAsync(d.Date);
+                }
+            }
+        }
+    }
+}

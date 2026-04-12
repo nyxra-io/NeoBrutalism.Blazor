@@ -1,0 +1,132 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Slider — custom track + thumb, supports vertical & two-thumbs *@
+
+<div class="nb-field">
+@if (!string.IsNullOrEmpty(Label))
+{
+    <NBLabel For="@_id">@Label</NBLabel>
+}
+
+<div class="nb-slider @(_orientationClass) @(Disabled ? "nb-slider--disabled" : "")">
+    <div class="nb-slider__track">
+        <div class="nb-slider__range" style="@_rangeStyle"></div>
+    </div>
+
+    @if (_values.Length == 1)
+    {
+        <input type="range"
+               id="@_id"
+               class="nb-slider__input"
+               min="@Min"
+               max="@Max"
+               step="@Step"
+               value="@_values[0]"
+               disabled="@Disabled"
+               @oninput="@(e => OnInput(e, 0))" />
+    }
+    else
+    {
+        @for (var i = 0; i < _values.Length; i++)
+        {
+            var idx = i;
+            <input type="range"
+                   id="@(idx == 0 ? _id : $"{_id}-{idx}")"
+                   class="nb-slider__input"
+                   min="@Min"
+                   max="@Max"
+                   step="@Step"
+                   value="@_values[idx]"
+                   disabled="@Disabled"
+                   @oninput="@(e => OnInput(e, idx))" />
+        }
+    }
+</div>
+</div>
+
+@code {
+    private readonly string _id = $"nb-slider-{Guid.NewGuid():N}";
+
+    [Parameter]
+    public double Value { get; set; }
+
+    [Parameter]
+    public EventCallback<double> ValueChanged { get; set; }
+
+    [Parameter]
+    public double[]? Values { get; set; }
+
+    [Parameter]
+    public EventCallback<double[]> ValuesChanged { get; set; }
+
+    [Parameter]
+    public string? Label { get; set; }
+
+    [Parameter]
+    public double Min { get; set; } = 0;
+
+    [Parameter]
+    public double Max { get; set; } = 100;
+
+    [Parameter]
+    public double Step { get; set; } = 1;
+
+    [Parameter]
+    public bool Disabled { get; set; }
+
+    [Parameter]
+    public NBSliderOrientation Orientation { get; set; } = NBSliderOrientation.Horizontal;
+
+    private bool IsMulti => Values is { Length: > 1 };
+
+    private double[] _values => IsMulti ? Values! : [Value];
+
+    private string _orientationClass => Orientation == NBSliderOrientation.Vertical
+        ? "nb-slider--vertical" : "nb-slider--horizontal";
+
+    private double Pct(double v)
+    {
+        var total = Max - Min;
+        return total <= 0 ? 0 : (v - Min) / total * 100;
+    }
+
+    private string _rangeStyle
+    {
+        get
+        {
+            var ic = System.Globalization.CultureInfo.InvariantCulture;
+
+            if (IsMulti && _values.Length >= 2)
+            {
+                var p0 = Pct(_values[0]).ToString("F2", ic);
+                var p1 = Pct(_values[1]).ToString("F2", ic);
+
+                return Orientation == NBSliderOrientation.Vertical
+                    ? $"bottom:{p0}%;top:calc(100% - {p1}%)"
+                    : $"left:{p0}%;right:calc(100% - {p1}%)";
+            }
+
+            var pct = Pct(_values[0]).ToString("F2", ic);
+            return Orientation == NBSliderOrientation.Vertical
+                ? $"bottom:0;top:calc(100% - {pct}%)"
+                : $"left:0;right:calc(100% - {pct}%)";
+        }
+    }
+
+    private async Task OnInput(ChangeEventArgs e, int index)
+    {
+        if (!double.TryParse(e.Value?.ToString(), System.Globalization.CultureInfo.InvariantCulture, out var v))
+            return;
+
+        if (IsMulti)
+        {
+            var arr = _values.ToArray();
+            arr[index] = v;
+            Array.Sort(arr);
+            await ValuesChanged.InvokeAsync(arr);
+        }
+        else
+        {
+            await ValueChanged.InvokeAsync(v);
+        }
+    }
+}

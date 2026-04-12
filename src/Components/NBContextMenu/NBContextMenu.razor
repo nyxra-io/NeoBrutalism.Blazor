@@ -1,0 +1,36 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Context Menu — right-click menu *@
+
+<div class="nb-context-menu-wrap" @oncontextmenu="HandleContextMenu" @oncontextmenu:preventDefault="true">
+    @ChildContent
+</div>
+
+@if (_visible)
+{
+    <div class="nb-context-menu-backdrop" @onclick="Close" @onclick:stopPropagation="true">
+        <div class="nb-context-menu" style="left: @(_x)px; top: @(_y)px;" @onclick:stopPropagation="true">
+            @MenuContent
+        </div>
+    </div>
+}
+
+@code {
+    private bool _visible;
+    private double _x;
+    private double _y;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment? MenuContent { get; set; }
+
+    private void HandleContextMenu(MouseEventArgs e)
+    {
+        _x = e.ClientX;
+        _y = e.ClientY;
+        _visible = true;
+    }
+
+    private void Close() => _visible = false;
+}

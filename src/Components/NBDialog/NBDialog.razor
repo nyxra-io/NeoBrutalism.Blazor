@@ -1,0 +1,104 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Dialog Component — shadcn-style modal *@
+
+@if (_shouldRender)
+{
+    <div class="nb-dialog-backdrop @(_isClosing ? "nb-dialog-backdrop--closing" : "nb-dialog-backdrop--open")" @onclick="HandleBackdropClick">
+        <div class="nb-dialog @(_isClosing ? "nb-dialog--closing" : "nb-dialog--open")" role="dialog" aria-modal="true" aria-labelledby="@_titleId" @onclick:stopPropagation="true">
+            @if (OnClose.HasDelegate)
+            {
+                <button class="nb-dialog__close" type="button" aria-label="Close" @onclick="() => OnClose.InvokeAsync()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+                    </svg>
+                    <span class="sr-only">Close</span>
+                </button>
+            }
+            @if (!string.IsNullOrWhiteSpace(Title) || !string.IsNullOrWhiteSpace(Description))
+            {
+                <div class="nb-dialog__header">
+                    @if (!string.IsNullOrWhiteSpace(Title))
+                    {
+                        <div class="nb-dialog__title" id="@_titleId">@Title</div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Description))
+                    {
+                        <div class="nb-dialog__description">@Description</div>
+                    }
+                </div>
+            }
+            <div class="nb-dialog__body">
+                @ChildContent
+            </div>
+            @if (Footer is not null)
+            {
+                <div class="nb-dialog__footer">
+                    @Footer
+                </div>
+            }
+        </div>
+    </div>
+}
+
+@code {
+    private const int AnimationDurationMs = 200;
+    private readonly string _titleId = $"nb-dialog-title-{Guid.NewGuid():N}";
+    private bool _shouldRender;
+    private bool _isClosing;
+    private bool _previousIsVisible;
+
+    [Parameter]
+    public bool IsVisible { get; set; }
+
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public string? Description { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter]
+    public RenderFragment? Footer { get; set; }
+
+    [Parameter]
+    public EventCallback OnClose { get; set; }
+
+    [Parameter]
+    public bool CloseOnBackdrop { get; set; } = false;
+
+    protected override void OnParametersSet()
+    {
+        if (IsVisible && !_previousIsVisible)
+        {
+            _shouldRender = true;
+            _isClosing = false;
+        }
+        else if (!IsVisible && _previousIsVisible)
+        {
+            _isClosing = true;
+            _ = RemoveAfterAnimationAsync();
+        }
+        _previousIsVisible = IsVisible;
+    }
+
+    [ExcludeFromCodeCoverage]
+    private async Task RemoveAfterAnimationAsync()
+    {
+        await Task.Delay(AnimationDurationMs);
+        if (_isClosing)
+        {
+            _shouldRender = false;
+            _isClosing = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task HandleBackdropClick()
+    {
+        if (CloseOnBackdrop)
+            await OnClose.InvokeAsync();
+    }
+}

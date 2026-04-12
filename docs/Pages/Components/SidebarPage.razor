@@ -1,0 +1,111 @@
+@page "/components/sidebar"
+
+<NBTitle Variant="@NBTitleVariant.Title">Sidebar</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A collapsible sidebar layout with navigation groups.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.SidebarDefault">
+    <Preview>
+        <div style="height: 300px; border: var(--nb-border); border-radius: var(--nb-radius); overflow: hidden;">
+            <NBSidebarProvider @bind-Open="_sidebarOpen">
+                <NBSidebar>
+                    <NBSidebarHeader>
+                        <span style="font-weight:700">My App</span>
+                    </NBSidebarHeader>
+                    <NBSidebarContent>
+                        <NBSidebarGroup>
+                            <NBSidebarGroupLabel>Navigation</NBSidebarGroupLabel>
+                            <NBSidebarMenu>
+                                <NBSidebarMenuItem>
+                                    <NBSidebarMenuButton IsActive="true">Dashboard</NBSidebarMenuButton>
+                                </NBSidebarMenuItem>
+                                <NBSidebarMenuItem>
+                                    <NBSidebarMenuButton>Settings</NBSidebarMenuButton>
+                                </NBSidebarMenuItem>
+                            </NBSidebarMenu>
+                        </NBSidebarGroup>
+                    </NBSidebarContent>
+                    <NBSidebarFooter>
+                        <span style="font-size:0.75rem">v1.0.0</span>
+                    </NBSidebarFooter>
+                </NBSidebar>
+                <NBSidebarInset>
+                    <div style="padding:1rem">
+                        <NBSidebarTrigger />
+                        <p>Main content area</p>
+                    </div>
+                </NBSidebarInset>
+            </NBSidebarProvider>
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.SubSection">NBSidebarProvider</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Open</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>true</code></NBTableCell>
+                <NBTableCell>Sidebar open state.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>OpenChanged</code></NBTableCell>
+                <NBTableCell><code>EventCallback&lt;bool&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Fires when sidebar toggles.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Width</code></NBTableCell>
+                <NBTableCell><code>string</code></NBTableCell>
+                <NBTableCell><code>"16rem"</code></NBTableCell>
+                <NBTableCell>Sidebar width when expanded.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.SubSection">NBSidebar</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Side</code></NBTableCell>
+                <NBTableCell><code>NBSidebarSide</code></NBTableCell>
+                <NBTableCell><code>Left</code></NBTableCell>
+                <NBTableCell>Which side to display on.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Variant</code></NBTableCell>
+                <NBTableCell><code>NBSidebarVariant</code></NBTableCell>
+                <NBTableCell><code>Sidebar</code></NBTableCell>
+                <NBTableCell>Visual variant.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Collapsible</code></NBTableCell>
+                <NBTableCell><code>NBSidebarCollapsible</code></NBTableCell>
+                <NBTableCell><code>Offcanvas</code></NBTableCell>
+                <NBTableCell>Collapse behavior.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private bool _sidebarOpen = true;
+}

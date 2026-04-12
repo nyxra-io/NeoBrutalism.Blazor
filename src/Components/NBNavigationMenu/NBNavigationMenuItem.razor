@@ -1,0 +1,85 @@
+@namespace NeoBrutalism.Blazor
+@* Navigation Menu Item — trigger with optional expandable content *@
+
+<div class="nb-nav-menu__item" @onfocusout="HandleFocusOut" @onmouseleave="HandleMouseLeave">
+    @if (Content is not null)
+    {
+        <button type="button"
+                class="nb-nav-menu__trigger @(_open ? "nb-nav-menu__trigger--open" : "")"
+                role="menuitem"
+                aria-haspopup="true"
+                aria-expanded="@_open"
+                @onclick="Toggle"
+                @onmouseenter="HandleMouseEnter">
+            @Label
+            <svg class="nb-nav-menu__chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <path d="m6 9 6 6 6-6" />
+            </svg>
+        </button>
+        @if (_open)
+        {
+            <div class="nb-nav-menu__content" @onmouseenter="CancelClose">
+                @Content
+            </div>
+        }
+    }
+    else
+    {
+        <a class="nb-nav-menu__link" href="@Href" role="menuitem">@Label</a>
+    }
+</div>
+
+@code {
+    private bool _open;
+    private CancellationTokenSource? _closeCts;
+
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment? Content { get; set; }
+
+    [Parameter]
+    public string? Href { get; set; }
+
+    private void Toggle() => _open = !_open;
+
+    private void HandleMouseEnter()
+    {
+        CancelClose();
+        _open = true;
+    }
+
+    [ExcludeFromCodeCoverage]
+    private void HandleMouseLeave()
+    {
+        _closeCts?.Cancel();
+        _closeCts = new CancellationTokenSource();
+        var token = _closeCts.Token;
+        _ = Task.Delay(200, token).ContinueWith(_ => InvokeAsync(() =>
+        {
+            if (!token.IsCancellationRequested)
+            {
+                _open = false;
+                StateHasChanged();
+            }
+        }), token);
+    }
+
+    private void CancelClose()
+    {
+        _closeCts?.Cancel();
+    }
+
+    [ExcludeFromCodeCoverage]
+    private void HandleFocusOut()
+    {
+        _ = Task.Delay(150).ContinueWith(_ => InvokeAsync(() =>
+        {
+            _open = false;
+            StateHasChanged();
+        }));
+    }
+}

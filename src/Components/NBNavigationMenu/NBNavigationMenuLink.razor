@@ -1,0 +1,14 @@
+@namespace NeoBrutalism.Blazor
+@* Navigation Menu Link *@
+
+<a class="nb-nav-menu__link-item" href="@Href" role="menuitem">
+    @ChildContent
+</a>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Href { get; set; } = string.Empty;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

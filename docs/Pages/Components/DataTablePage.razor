@@ -1,0 +1,77 @@
+@page "/components/data-table"
+
+<NBTitle Variant="@NBTitleVariant.Title">Data Table</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A sortable, filterable, and paginated data table.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.DataTableDefault">
+    <Preview>
+        <NBDataTable Items="_payments" Columns="_columns" Searchable="true"
+                     SearchField="@(p => p.Email)" PageSize="3" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Items</code></NBTableCell>
+                <NBTableCell><code>IReadOnlyList&lt;TItem&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Data items. Required.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Columns</code></NBTableCell>
+                <NBTableCell><code>IReadOnlyList&lt;NBDataTableColumn&lt;TItem&gt;&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Column definitions. Required.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>PageSize</code></NBTableCell>
+                <NBTableCell><code>int</code></NBTableCell>
+                <NBTableCell><code>10</code></NBTableCell>
+                <NBTableCell>Rows per page (0 = no pagination).</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Searchable</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Show search input.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>SearchField</code></NBTableCell>
+                <NBTableCell><code>Func&lt;TItem, string&gt;?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Function to extract searchable text.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    record Payment(string Id, string Email, string Status, decimal Amount);
+
+    private readonly List<Payment> _payments =
+    [
+        new("#1001", "alice@example.com", "Paid", 240.00m),
+        new("#1002", "bob@example.com", "Pending", 125.50m),
+        new("#1003", "charlie@example.com", "Paid", 890.00m),
+        new("#1004", "diana@example.com", "Failed", 50.00m),
+        new("#1005", "eve@example.com", "Paid", 1200.00m)
+    ];
+
+    private readonly List<NBDataTableColumn<Payment>> _columns =
+    [
+        new() { Title = "Order", Field = p => p.Id },
+        new() { Title = "Email", Field = p => p.Email, Sortable = true },
+        new() { Title = "Status", Field = p => p.Status },
+        new() { Title = "Amount", Field = p => p.Amount.ToString("C"), Sortable = true }
+    ];
+}

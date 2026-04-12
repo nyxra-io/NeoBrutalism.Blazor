@@ -1,0 +1,106 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Command — searchable command palette *@
+
+<div class="nb-command" role="listbox" @onkeydown="HandleKeyDown">
+    <div class="nb-command__input-wrap">
+        <svg class="nb-command__search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" />
+        </svg>
+        <input class="nb-command__input" type="text" placeholder="@Placeholder"
+               @bind-value="_query" @bind-value:event="oninput" />
+    </div>
+    <div class="nb-command__list">
+        @{ var hasResults = false; }
+        @foreach (var group in Groups)
+        {
+            var filtered = group.Items.Where(i => MatchesQuery(i)).ToList();
+            if (filtered.Count == 0) continue;
+            hasResults = true;
+
+            <div class="nb-command__group">
+                <div class="nb-command__group-heading">@group.Heading</div>
+                @foreach (var item in filtered)
+                {
+                    var isActive = item.Value == _activeValue;
+                    <div class="nb-command__item @(isActive ? "nb-command__item--active" : "") @(item.Disabled ? "nb-command__item--disabled" : "")"
+                         role="option"
+                         aria-selected="@isActive"
+                         @onclick="() => SelectItem(item)"
+                         @onmouseenter="() => _activeValue = item.Value">
+                        <span>@item.Label</span>
+                        @if (!string.IsNullOrWhiteSpace(item.Shortcut))
+                        {
+                            <span class="nb-command__shortcut">@item.Shortcut</span>
+                        }
+                    </div>
+                }
+            </div>
+        }
+        @if (!hasResults)
+        {
+            <div class="nb-command__empty">@EmptyText</div>
+        }
+    </div>
+</div>
+
+@code {
+    private string _query = string.Empty;
+    private string? _activeValue;
+
+    [Parameter, EditorRequired]
+    public IReadOnlyList<NBCommandGroup> Groups { get; set; } = [];
+
+    [Parameter]
+    public string Placeholder { get; set; } = "Type a command or search…";
+
+    [Parameter]
+    public EventCallback<NBCommandItem> OnSelect { get; set; }
+
+    [Parameter]
+    public string EmptyText { get; set; } = "No results found.";
+
+    private bool MatchesQuery(NBCommandItem item)
+    {
+        if (string.IsNullOrWhiteSpace(_query)) return true;
+        return item.Label.Contains(_query, StringComparison.OrdinalIgnoreCase)
+            || item.Value.Contains(_query, StringComparison.OrdinalIgnoreCase);
+    }
+
+    private async Task SelectItem(NBCommandItem item)
+    {
+        if (!item.Disabled)
+            await OnSelect.InvokeAsync(item);
+    }
+
+    private IReadOnlyList<NBCommandItem> GetAllFiltered()
+    {
+        return Groups.SelectMany(g => g.Items).Where(MatchesQuery).Where(i => !i.Disabled).ToList();
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        var items = GetAllFiltered();
+        if (items.Count == 0) return;
+
+        if (e.Key == "ArrowDown")
+        {
+            var idx = items.ToList().FindIndex(i => i.Value == _activeValue);
+            idx = Math.Min(idx + 1, items.Count - 1);
+            _activeValue = items[idx].Value;
+        }
+        else if (e.Key == "ArrowUp")
+        {
+            var idx = items.ToList().FindIndex(i => i.Value == _activeValue);
+            idx = Math.Max(idx - 1, 0);
+            _activeValue = items[idx].Value;
+        }
+        else if (e.Key == "Enter" && _activeValue is not null)
+        {
+            var item = items.FirstOrDefault(i => i.Value == _activeValue);
+            if (item is not null)
+                await SelectItem(item);
+        }
+    }
+}

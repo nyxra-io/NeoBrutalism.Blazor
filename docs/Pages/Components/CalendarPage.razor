@@ -1,0 +1,84 @@
+@page "/components/calendar"
+
+<NBTitle Variant="@NBTitleVariant.Title">Calendar</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A date selection grid supporting single and range modes.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Single date</NBTitle>
+<DemoBlock Code="@CS.CalendarSingle">
+    <Preview>
+        <NBCalendar @bind-SelectedDate="_date" />
+        <p>Selected: @_date?.ToString("dd/MM/yyyy")</p>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Range selection</NBTitle>
+<DemoBlock Code="@CS.CalendarRange">
+    <Preview>
+        <NBCalendar Mode="NBCalendarMode.Range"
+                    @bind-RangeStart="_start"
+                    @bind-RangeEnd="_end" />
+        <p>@_start?.ToString("dd/MM") – @_end?.ToString("dd/MM")</p>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Mode</code></NBTableCell>
+                <NBTableCell><code>NBCalendarMode</code></NBTableCell>
+                <NBTableCell><code>Single</code></NBTableCell>
+                <NBTableCell>Selection mode.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>SelectedDate</code></NBTableCell>
+                <NBTableCell><code>DateTime?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Selected date (Single mode).</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>SelectedDateChanged</code></NBTableCell>
+                <NBTableCell><code>EventCallback&lt;DateTime?&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Fires when date changes.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>RangeStart</code></NBTableCell>
+                <NBTableCell><code>DateTime?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Range start date.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>RangeEnd</code></NBTableCell>
+                <NBTableCell><code>DateTime?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Range end date.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>MinDate</code></NBTableCell>
+                <NBTableCell><code>DateTime?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Minimum selectable date.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>MaxDate</code></NBTableCell>
+                <NBTableCell><code>DateTime?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Maximum selectable date.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private DateTime? _date;
+    private DateTime? _start;
+    private DateTime? _end;
+}

@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <!-- XML docs for DocFX / IntelliSense -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <!-- NuGet -->
+    <IsPackable>true</IsPackable>
+    <PackageId>NeoBrutalism.Blazor</PackageId>
+    <Version>0.0.0-local</Version>
+    <Authors>Nyxra</Authors>
+    <Description>Neo Brutalism UI component library for Blazor</Description>
+    <PackageTags>blazor;components;ui;neo-brutalism;razor</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/nyxra-io/NeoBrutalism.Blazor</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nyxra-io/NeoBrutalism.Blazor</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
+
+    <!-- SourceLink -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+    <None Include="icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+  </ItemGroup>
+
+  <!-- Tailwind CSS build -->
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+    <TailwindExec>node_modules\.bin\tailwindcss.cmd</TailwindExec>
+  </PropertyGroup>
+  <PropertyGroup Condition="!$([MSBuild]::IsOSPlatform('Windows'))">
+    <TailwindExec>./node_modules/.bin/tailwindcss</TailwindExec>
+  </PropertyGroup>
+
+  <Target Name="BuildTailwind" BeforeTargets="Build">
+    <Exec Command="$(TailwindExec) -i ./input.css -o ./wwwroot/nb-design-system.css --minify"
+          WorkingDirectory="$(MSBuildProjectDirectory)" />
+  </Target>
+
+</Project>

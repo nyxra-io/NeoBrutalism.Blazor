@@ -1,0 +1,58 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Popover — click-triggered floating content *@
+
+<div class="nb-popover-wrap" @onfocusout="HandleFocusOut">
+    <div class="nb-popover-trigger" @onclick="Toggle" @onclick:stopPropagation="true">
+        @ChildContent
+    </div>
+    @if (_open)
+    {
+        <div class="nb-popover nb-popover--@Side.ToString().ToLowerInvariant()" @onclick:stopPropagation="true">
+            @Content
+        </div>
+    }
+</div>
+
+@code {
+    private bool _open;
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    [Parameter, EditorRequired]
+    public RenderFragment? Content { get; set; }
+
+    [Parameter]
+    public NBPopoverSide Side { get; set; } = NBPopoverSide.Bottom;
+
+    [Parameter]
+    public bool IsOpen { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> IsOpenChanged { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _open = IsOpen;
+    }
+
+    private async Task Toggle()
+    {
+        _open = !_open;
+        await IsOpenChanged.InvokeAsync(_open);
+    }
+
+    [ExcludeFromCodeCoverage]
+    private void HandleFocusOut()
+    {
+        _ = Task.Delay(150).ContinueWith(_ => InvokeAsync(() =>
+        {
+            if (_open)
+            {
+                _open = false;
+                IsOpenChanged.InvokeAsync(false);
+                StateHasChanged();
+            }
+        }));
+    }
+}

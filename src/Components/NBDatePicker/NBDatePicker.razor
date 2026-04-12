@@ -1,0 +1,74 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Date Picker — popover with calendar *@
+
+<div class="nb-field">
+<NBLabel For="@Id">@Label</NBLabel>
+<div class="nb-date-picker" @onfocusout="HandleFocusOut">
+    <button type="button" id="@Id" class="nb-select__trigger" @onclick="Toggle">
+        <span class="nb-select__value @(Value is null ? "nb-select__value--placeholder" : "")">
+            @(Value.HasValue ? Value.Value.ToString(Format) : (Placeholder ?? "Pick a date"))
+        </span>
+        <svg class="nb-select__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 2v4" /><path d="M16 2v4" /><rect width="18" height="18" x="3" y="4" rx="2" /><path d="M3 10h18" />
+        </svg>
+    </button>
+    @if (_open)
+    {
+        <div class="nb-date-picker__dropdown" @onclick:stopPropagation="true">
+            <NBCalendar Mode="NBCalendarMode.Single"
+                        SelectedDate="@Value"
+                        SelectedDateChanged="HandleDateSelected"
+                        MinDate="@MinDate"
+                        MaxDate="@MaxDate" />
+        </div>
+    }
+</div>
+</div>
+
+@code {
+    private bool _open;
+
+    [Parameter, EditorRequired]
+    public string Label { get; set; } = string.Empty;
+
+    [Parameter, EditorRequired]
+    public string Id { get; set; } = string.Empty;
+
+    [Parameter]
+    public DateTime? Value { get; set; }
+
+    [Parameter]
+    public EventCallback<DateTime?> ValueChanged { get; set; }
+
+    [Parameter]
+    public string? Placeholder { get; set; }
+
+    [Parameter]
+    public string Format { get; set; } = "dd/MM/yyyy";
+
+    [Parameter]
+    public DateTime? MinDate { get; set; }
+
+    [Parameter]
+    public DateTime? MaxDate { get; set; }
+
+    private void Toggle() => _open = !_open;
+
+    private async Task HandleDateSelected(DateTime? date)
+    {
+        _open = false;
+        await ValueChanged.InvokeAsync(date);
+    }
+
+    [ExcludeFromCodeCoverage]
+    private void HandleFocusOut()
+    {
+        _ = Task.Delay(200).ContinueWith(_ => InvokeAsync(() =>
+        {
+            _open = false;
+            StateHasChanged();
+        }));
+    }
+}

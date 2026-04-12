@@ -1,0 +1,64 @@
+@page "/components/pagination"
+
+<NBTitle Variant="@NBTitleVariant.Title">Pagination</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">Smart page navigator with automatic ellipsis for large page counts.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.PaginationDefault">
+    <Preview>
+        <NBPagination TotalPages="10" @bind-CurrentPage="_page" />
+        <p style="margin-top:10px;font-size:14px">Current page: @_page</p>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Few pages (no ellipsis)</NBTitle>
+<DemoBlock Code="@CS.PaginationFew">
+    <Preview>
+        <NBPagination TotalPages="5" @bind-CurrentPage="_page2" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Many pages</NBTitle>
+<DemoBlock Code="@CS.PaginationMany">
+    <Preview>
+        <NBPagination TotalPages="50" @bind-CurrentPage="_page3" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>TotalPages</code> *</NBTableCell>
+                <NBTableCell><code>int</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Total number of pages.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>CurrentPage</code></NBTableCell>
+                <NBTableCell><code>int</code></NBTableCell>
+                <NBTableCell><code>1</code></NBTableCell>
+                <NBTableCell>Active page number (bindable).</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>CurrentPageChanged</code></NBTableCell>
+                <NBTableCell><code>EventCallback&lt;int&gt;</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Two-way binding callback.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private int _page = 1;
+    private int _page2 = 1;
+    private int _page3 = 1;
+}

@@ -1,0 +1,39 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "files": ["NeoBrutalism.Blazor.csproj"],
+          "src": "../../src"
+        }
+      ],
+      "dest": "api",
+      "disableGitFeatures": false,
+      "disableDefaultFilter": false
+    }
+  ],
+  "build": {
+    "content": [
+      {
+        "files": ["api/**.yml", "api/index.md"]
+      },
+      {
+        "files": ["*.md", "toc.yml"],
+        "src": "."
+      }
+    ],
+    "resource": [
+      {
+        "files": ["images/**"]
+      }
+    ],
+    "output": "../wwwroot/api-docs",
+    "template": ["default", "modern"],
+    "globalMetadata": {
+      "_appName": "NeoBrutalism.Blazor",
+      "_appTitle": "NeoBrutalism Blazor — API Reference",
+      "_appFaviconPath": "favicon.ico",
+      "_enableSearch": true
+    }
+  }
+}

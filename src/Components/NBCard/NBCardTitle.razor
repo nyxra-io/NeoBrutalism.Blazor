@@ -1,0 +1,9 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Card Title *@
+
+<div class="nb-card__title">@ChildContent</div>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

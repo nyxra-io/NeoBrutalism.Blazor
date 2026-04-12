@@ -1,0 +1,82 @@
+@page "/components/carousel"
+
+<NBTitle Variant="@NBTitleVariant.Title">Carousel</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A slide-based content viewer with navigation controls.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.CarouselDefault">
+    <Preview>
+        <div style="max-width:24rem; margin: 0 3rem;">
+            <NBCarousel SlideCount="3">
+                <NBCarouselItem>
+                    <div style="padding:2rem; text-align:center; background:var(--nb-bg-secondary)">Slide 1</div>
+                </NBCarouselItem>
+                <NBCarouselItem>
+                    <div style="padding:2rem; text-align:center; background:var(--nb-primary); color:white">Slide 2</div>
+                </NBCarouselItem>
+                <NBCarouselItem>
+                    <div style="padding:2rem; text-align:center; background:var(--nb-bg-secondary)">Slide 3</div>
+                </NBCarouselItem>
+            </NBCarousel>
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Auto-play</NBTitle>
+<DemoBlock Code="@CS.CarouselAutoPlay">
+    <Preview>
+        <div style="max-width:24rem; margin: 0 3rem;">
+            <NBCarousel SlideCount="3" AutoPlay="true" AutoPlayInterval="2000">
+                <NBCarouselItem><div style="padding:3rem;text-align:center;background:#fef3c7">Auto 1</div></NBCarouselItem>
+                <NBCarouselItem><div style="padding:3rem;text-align:center;background:#dbeafe">Auto 2</div></NBCarouselItem>
+                <NBCarouselItem><div style="padding:3rem;text-align:center;background:#dcfce7">Auto 3</div></NBCarouselItem>
+            </NBCarousel>
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.SubSection">NBCarousel</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>ChildContent</code></NBTableCell>
+                <NBTableCell><code>RenderFragment?</code></NBTableCell>
+                <NBTableCell>—</NBTableCell>
+                <NBTableCell>Carousel items.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>SlideCount</code></NBTableCell>
+                <NBTableCell><code>int</code></NBTableCell>
+                <NBTableCell><code>1</code></NBTableCell>
+                <NBTableCell>Total number of slides.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Orientation</code></NBTableCell>
+                <NBTableCell><code>NBCarouselOrientation</code></NBTableCell>
+                <NBTableCell><code>Horizontal</code></NBTableCell>
+                <NBTableCell>Scroll direction.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>AutoPlay</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Enable auto-play.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>AutoPlayInterval</code></NBTableCell>
+                <NBTableCell><code>int</code></NBTableCell>
+                <NBTableCell><code>3000</code></NBTableCell>
+                <NBTableCell>Auto-play interval in ms.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>

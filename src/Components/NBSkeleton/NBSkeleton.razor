@@ -1,0 +1,17 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Skeleton — content placeholder with pulse animation *@
+
+<div class="nb-skeleton" style="@_style"></div>
+
+@code {
+    [Parameter]
+    public string? Width { get; set; }
+
+    [Parameter]
+    public string? Height { get; set; }
+
+    private string _style => string.Join(";",
+        Width is not null ? $"width:{Width}" : null,
+        Height is not null ? $"height:{Height}" : null
+    ).Trim(';');
+}

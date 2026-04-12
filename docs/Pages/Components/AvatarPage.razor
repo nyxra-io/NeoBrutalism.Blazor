@@ -1,0 +1,77 @@
+@page "/components/avatar"
+
+<NBTitle Variant="@NBTitleVariant.Title">Avatar</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A user profile image with initials fallback and three sizes.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Image</NBTitle>
+<DemoBlock Code="@CS.AvatarImage">
+    <Preview>
+        <div style="display:flex;gap:12px;align-items:center">
+            <NBAvatar Src="https://i.pravatar.cc/80?img=5" Alt="Alice" />
+            <NBAvatar Src="https://i.pravatar.cc/80?img=8" Alt="Bob" Size="@NBAvatarSize.Lg" />
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Initials fallback</NBTitle>
+<DemoBlock Code="@CS.AvatarInitials">
+    <Preview>
+        <div style="display:flex;gap:12px;align-items:center">
+            <NBAvatar Initials="AB" Size="@NBAvatarSize.Sm" />
+            <NBAvatar Initials="CD" />
+            <NBAvatar Initials="EF" Size="@NBAvatarSize.Lg" />
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Generic icon fallback</NBTitle>
+<DemoBlock Code="@CS.AvatarFallback">
+    <Preview>
+        <div style="display:flex;gap:12px;align-items:center">
+            <NBAvatar Size="@NBAvatarSize.Sm" />
+            <NBAvatar />
+            <NBAvatar Size="@NBAvatarSize.Lg" />
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Src</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Image URL.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Alt</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Alt text for the image.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Initials</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>1–2 character text shown when no Src is set.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Size</code></NBTableCell>
+                <NBTableCell><code>NBAvatarSize</code></NBTableCell>
+                <NBTableCell><code>Default</code></NBTableCell>
+                <NBTableCell>Avatar size.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">Enum</NBTitle>
+<CodeBlock Code="@CS.AvatarEnum" />

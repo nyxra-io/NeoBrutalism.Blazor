@@ -1,0 +1,42 @@
+﻿@page "/"
+
+<NBTitle Variant="@NBTitleVariant.Title">NeoBrutalism Blazor</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">Neo Brutalism component library for Blazor — bold borders, hard shadows, uppercase typography.</NBTitle>
+
+<p>NeoBrutalism Blazor is a <strong>Blazor Razor Class Library</strong> that brings the Neo Brutalism design style to .NET applications. It provides 30+ ready-to-use components styled after <a href="https://neobrutalism.dev" target="_blank">neobrutalism.dev</a>, built natively for Blazor without any JavaScript framework dependency.</p>
+
+<NBTitle Variant="@NBTitleVariant.Section">Quick look</NBTitle>
+
+<DemoBlock Code='@("<NBButton>Save</NBButton>\n<NBButton Variant=\"NBButtonVariant.Neutral\">Cancel</NBButton>\n<NBButton Variant=\"NBButtonVariant.Danger\">Delete</NBButton>")'>
+    <Preview>
+        <NBButton>Save</NBButton>
+        <NBButton Variant="NBButtonVariant.Neutral">Cancel</NBButton>
+        <NBButton Variant="NBButtonVariant.Danger">Delete</NBButton>
+    </Preview>
+</DemoBlock>
+
+<DemoBlock Code='@("<NBAlert Title=\"Success\" Body=\"Your changes have been saved.\" Variant=\"NBAlertVariant.Success\" />\n<NBAlert Title=\"Error\" Body=\"Something went wrong.\" Variant=\"NBAlertVariant.Error\" />")' Column="true">
+    <Preview>
+        <NBAlert Title="Success" Body="Your changes have been saved." Variant="NBAlertVariant.Success" />
+        <NBAlert Title="Error" Body="Something went wrong." Variant="NBAlertVariant.Error" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Features</NBTitle>
+<ul>
+    <li>30+ components covering forms, overlays, layout, data display and navigation</li>
+    <li>Neo Brutalism visual style: 2px black borders, hard `box-shadow`, 0 border-radius, uppercase font</li>
+    <li>Fully customizable via CSS custom properties or <code>NBThemeProvider</code></li>
+    <li>Zero JavaScript dependencies — pure Blazor + CSS</li>
+    <li>Tailwind CSS v4 used as a build tool (pre-compiled, not required by consumers)</li>
+    <li>NuGet distributed — one line install, one `&lt;link&gt;` tag</li>
+</ul>
+
+<p style="margin-top:2rem">
+    <NBButton OnClick="@(() => Nav.NavigateTo("/getting-started"))">Get started →</NBButton>
+</p>
+
+@code {
+    [Inject] NavigationManager Nav { get; set; } = null!;
+}
+

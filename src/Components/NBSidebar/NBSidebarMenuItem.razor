@@ -1,0 +1,8 @@
+@namespace NeoBrutalism.Blazor
+
+<li class="nb-sidebar__menu-item">@ChildContent</li>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

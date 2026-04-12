@@ -1,0 +1,111 @@
+@page "/components/slider"
+
+<NBTitle Variant="@NBTitleVariant.Title">Slider</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">An input where the user selects a value from within a given range.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.SliderDefault">
+    <Preview>
+        <NBSlider Label="Volume" @bind-Value="_vol" Min="0" Max="100" />
+        <p style="margin-top:8px;font-size:14px">Value: @_vol</p>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Two thumbs</NBTitle>
+<DemoBlock Code="@CS.SliderTwoThumbs">
+    <Preview>
+        <NBSlider Label="Price range" @bind-Values="_range" Min="0" Max="100" />
+        <p style="margin-top:8px;font-size:14px">@_range[0] – @_range[1]</p>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Vertical</NBTitle>
+<DemoBlock Code="@CS.SliderVertical">
+    <Preview>
+        <NBSlider @bind-Value="_vert" Min="0" Max="100" Orientation="NBSliderOrientation.Vertical" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Controlled</NBTitle>
+<DemoBlock Code="@CS.SliderControlled">
+    <Preview>
+        <NBSlider Label="Temperature" @bind-Values="_temp" Min="0" Max="1" Step="0.1" />
+        <p style="margin-top:8px;font-size:14px">@string.Join(", ", _temp)</p>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Disabled</NBTitle>
+<DemoBlock Code="@CS.SliderDisabled">
+    <Preview>
+        <NBSlider Label="Disabled" Value="60" Disabled="true" />
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Parameter</NBTableHead>
+                <NBTableHead>Type</NBTableHead>
+                <NBTableHead>Default</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>Label</code></NBTableCell>
+                <NBTableCell><code>string?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Label shown above the slider.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Value</code></NBTableCell>
+                <NBTableCell><code>double</code></NBTableCell>
+                <NBTableCell><code>0</code></NBTableCell>
+                <NBTableCell>Current value for single-thumb slider (bindable).</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Values</code></NBTableCell>
+                <NBTableCell><code>double[]?</code></NBTableCell>
+                <NBTableCell><code>null</code></NBTableCell>
+                <NBTableCell>Current values for multi-thumb slider (bindable).</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Min</code></NBTableCell>
+                <NBTableCell><code>double</code></NBTableCell>
+                <NBTableCell><code>0</code></NBTableCell>
+                <NBTableCell>Minimum value.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Max</code></NBTableCell>
+                <NBTableCell><code>double</code></NBTableCell>
+                <NBTableCell><code>100</code></NBTableCell>
+                <NBTableCell>Maximum value.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Step</code></NBTableCell>
+                <NBTableCell><code>double</code></NBTableCell>
+                <NBTableCell><code>1</code></NBTableCell>
+                <NBTableCell>Step increment.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Orientation</code></NBTableCell>
+                <NBTableCell><code>NBSliderOrientation</code></NBTableCell>
+                <NBTableCell><code>Horizontal</code></NBTableCell>
+                <NBTableCell>Horizontal or Vertical orientation.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>Disabled</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Disables the slider.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+@code {
+    private double _vol = 40;
+    private double[] _range = [25, 75];
+    private double _vert = 50;
+    private double[] _temp = [0.3, 0.7];
+}

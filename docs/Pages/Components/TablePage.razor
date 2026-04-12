@@ -1,0 +1,100 @@
+@page "/components/table"
+
+<NBTitle Variant="@NBTitleVariant.Title">Table</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A composable data table built from semantic sub-components.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.TableDefault">
+    <Preview>
+        <NBTable>
+            <NBTableCaption>Q1 2025 Orders</NBTableCaption>
+            <NBTableHeader>
+                <NBTableRow>
+                    <NBTableHead>Order</NBTableHead>
+                    <NBTableHead>Customer</NBTableHead>
+                    <NBTableHead>Status</NBTableHead>
+                    <NBTableHead>Amount</NBTableHead>
+                </NBTableRow>
+            </NBTableHeader>
+            <NBTableBody>
+                <NBTableRow>
+                    <NBTableCell>#1001</NBTableCell>
+                    <NBTableCell>Alice Martin</NBTableCell>
+                    <NBTableCell><NBBadge>Paid</NBBadge></NBTableCell>
+                    <NBTableCell>$240.00</NBTableCell>
+                </NBTableRow>
+                <NBTableRow>
+                    <NBTableCell>#1002</NBTableCell>
+                    <NBTableCell>Bob Chen</NBTableCell>
+                    <NBTableCell><NBBadge Variant="@NBBadgeVariant.Neutral">Pending</NBBadge></NBTableCell>
+                    <NBTableCell>$89.00</NBTableCell>
+                </NBTableRow>
+                <NBTableRow>
+                    <NBTableCell>#1003</NBTableCell>
+                    <NBTableCell>Carol Davis</NBTableCell>
+                    <NBTableCell><NBBadge>Paid</NBBadge></NBTableCell>
+                    <NBTableCell>$560.00</NBTableCell>
+                </NBTableRow>
+            </NBTableBody>
+            <NBTableFooter>
+                <NBTableRow>
+                    <NBTableCell colspan="3"><strong>Total</strong></NBTableCell>
+                    <NBTableCell><strong>$889.00</strong></NBTableCell>
+                </NBTableRow>
+            </NBTableFooter>
+        </NBTable>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Sub-components</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+            <NBTableRow>
+                <NBTableHead>Component</NBTableHead>
+                <NBTableHead>HTML equivalent</NBTableHead>
+                <NBTableHead>Description</NBTableHead>
+            </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+            <NBTableRow>
+                <NBTableCell><code>NBTable</code></NBTableCell>
+                <NBTableCell><code>&lt;table&gt;</code></NBTableCell>
+                <NBTableCell>Root wrapper with horizontal scroll on overflow.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>NBTableCaption</code></NBTableCell>
+                <NBTableCell><code>&lt;caption&gt;</code></NBTableCell>
+                <NBTableCell>Accessible table title.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>NBTableHeader</code></NBTableCell>
+                <NBTableCell><code>&lt;thead&gt;</code></NBTableCell>
+                <NBTableCell>Column header section.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>NBTableBody</code></NBTableCell>
+                <NBTableCell><code>&lt;tbody&gt;</code></NBTableCell>
+                <NBTableCell>Data rows section.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>NBTableFooter</code></NBTableCell>
+                <NBTableCell><code>&lt;tfoot&gt;</code></NBTableCell>
+                <NBTableCell>Summary/footer section.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>NBTableRow</code></NBTableCell>
+                <NBTableCell><code>&lt;tr&gt;</code></NBTableCell>
+                <NBTableCell>A single table row.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>NBTableHead</code></NBTableCell>
+                <NBTableCell><code>&lt;th&gt;</code></NBTableCell>
+                <NBTableCell>Header cell.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>NBTableCell</code></NBTableCell>
+                <NBTableCell><code>&lt;td&gt;</code></NBTableCell>
+                <NBTableCell>Data cell. Passes through HTML attributes.</NBTableCell>
+            </NBTableRow>
+    </NBTableBody>
+</NBTable>

@@ -1,0 +1,86 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Pagination *@
+
+<nav class="nb-pagination" aria-label="Pagination">
+    <button type="button"
+            class="nb-pagination__btn"
+            disabled="@(CurrentPage <= 1)"
+            @onclick="GoPrev"
+            aria-label="Previous page">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="square" stroke-linejoin="miter">
+            <polyline points="15 18 9 12 15 6" />
+        </svg>
+    </button>
+
+    @foreach (var pn in _pages)
+    {
+        @if (pn == -1)
+        {
+            <span class="nb-pagination__ellipsis">…</span>
+        }
+        else
+        {
+            <button type="button"
+                    class="@PageBtnClass(pn)"
+                    @onclick="() => GoTo(pn)"
+                    aria-current="@AriaCurrent(pn)">
+                @pn
+            </button>
+        }
+    }
+
+    <button type="button"
+            class="nb-pagination__btn"
+            disabled="@(CurrentPage >= TotalPages)"
+            @onclick="GoNext"
+            aria-label="Next page">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2.5"
+             stroke-linecap="square" stroke-linejoin="miter">
+            <polyline points="9 18 15 12 9 6" />
+        </svg>
+    </button>
+</nav>
+
+@code {
+    [Parameter, EditorRequired]
+    public int TotalPages { get; set; }
+
+    [Parameter]
+    public int CurrentPage { get; set; } = 1;
+
+    [Parameter]
+    public EventCallback<int> CurrentPageChanged { get; set; }
+
+    private IEnumerable<int> _pages => BuildPages();
+
+    private IEnumerable<int> BuildPages()
+    {
+        var pages = new List<int>();
+        if (TotalPages <= 7)
+        {
+            for (int i = 1; i <= TotalPages; i++) pages.Add(i);
+            return pages;
+        }
+
+        pages.Add(1);
+        if (CurrentPage > 3) pages.Add(-1); // ellipsis
+
+        for (int i = Math.Max(2, CurrentPage - 1); i <= Math.Min(TotalPages - 1, CurrentPage + 1); i++)
+            pages.Add(i);
+
+        if (CurrentPage < TotalPages - 2) pages.Add(-1); // ellipsis
+        pages.Add(TotalPages);
+        return pages;
+    }
+
+    private async Task GoTo(int pn) => await CurrentPageChanged.InvokeAsync(pn);
+    private async Task GoPrev() => await GoTo(CurrentPage - 1);
+    private async Task GoNext() => await GoTo(CurrentPage + 1);
+    private string AriaCurrent(int pn) => pn == CurrentPage ? "page" : string.Empty;
+    private string PageBtnClass(int pn) => pn == CurrentPage
+        ? "nb-pagination__btn nb-pagination__btn--active"
+        : "nb-pagination__btn";
+}

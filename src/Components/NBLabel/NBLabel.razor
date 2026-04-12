@@ -1,0 +1,12 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Label Component *@
+
+<label class="nb-label" for="@For">@ChildContent</label>
+
+@code {
+    [Parameter]
+    public string? For { get; set; }
+
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}
