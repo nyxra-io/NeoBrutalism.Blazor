@@ -10,6 +10,8 @@ Inspired by [neobrutalism.dev](https://www.neobrutalism.dev), built natively for
 
 ## Installation
 
+
+
 ```bash
 dotnet add package NeoBrutalism.Blazor
 ```
