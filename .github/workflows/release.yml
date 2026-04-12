@@ -7,6 +7,16 @@ on:
         description: 'Package version (SemVer, e.g. 1.2.0)'
         required: true
         type: string
+      publish_nuget:
+        description: 'Publish to NuGet'
+        required: false
+        type: boolean
+        default: true
+      publish_docs:
+        description: 'Publish documentation to GitHub Pages'
+        required: false
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -22,16 +32,16 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
           dotnet-quality: 'preview'
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '22'
           cache: 'npm'
@@ -52,21 +62,22 @@ jobs:
 
   nuget:
     name: Pack & Publish NuGet
+    if: ${{ inputs.publish_nuget }}
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
           dotnet-quality: 'preview'
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '22'
           cache: 'npm'
@@ -98,13 +109,14 @@ jobs:
 
   docs:
     name: Build Docs
+    if: ${{ inputs.publish_docs }}
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
           dotnet-quality: 'preview'
@@ -113,7 +125,7 @@ jobs:
         run: dotnet tool install -g docfx
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: '22'
           cache: 'npm'
@@ -136,12 +148,13 @@ jobs:
           /p:BlazorWasmPathBase=/NeoBrutalism.Blazor/
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: ./docs-site/wwwroot
 
   deploy-docs:
     name: Deploy to GitHub Pages
+    if: ${{ inputs.publish_docs }}
     needs: docs
     runs-on: ubuntu-latest
     environment:
@@ -150,14 +163,15 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
   github-release:
     name: Create GitHub Release
+    if: ${{ always() && inputs.publish_nuget && needs.nuget.result == 'success' }}
     needs: [nuget, deploy-docs]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Create tag
         run: |
@@ -165,7 +179,7 @@ jobs:
           git push origin "${{ inputs.version }}"
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: "${{ inputs.version }}"
           name: "${{ inputs.version }}"

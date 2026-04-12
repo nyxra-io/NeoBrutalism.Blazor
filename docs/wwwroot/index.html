@@ -21,6 +21,18 @@
     <link rel="icon" type="image/png" href="favicon.png" />
     <link href="NeoBrutalism.Blazor.Docs.styles.css" rel="stylesheet" />
     <script type="importmap"></script>
+    <!-- GitHub Pages SPA redirect handler -->
+    <script>
+        (function () {
+            var redirect = window.location.search.split('?/')[1];
+            if (redirect) {
+                var decoded = redirect.split('&').slice(0).join('').replace(/~and~/g, '&');
+                window.history.replaceState(null, null,
+                    window.location.pathname + decoded + window.location.hash
+                );
+            }
+        })();
+    </script>
 </head>
 
 <body>

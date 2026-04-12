@@ -1024,15 +1024,15 @@ public static class CS
         <NBNavigationMenu>
             <NBNavigationMenuItem Label="Getting Started">
                 <Content>
-                    <NBNavigationMenuLink Href="/getting-started">Installation</NBNavigationMenuLink>
-                    <NBNavigationMenuLink Href="/theming">Theming</NBNavigationMenuLink>
+                    <NBNavigationMenuLink Href="getting-started">Installation</NBNavigationMenuLink>
+                    <NBNavigationMenuLink Href="theming">Theming</NBNavigationMenuLink>
                 </Content>
             </NBNavigationMenuItem>
             <NBNavigationMenuItem Label="Components">
                 <Content>
-                    <NBNavigationMenuLink Href="/components/button">Button</NBNavigationMenuLink>
-                    <NBNavigationMenuLink Href="/components/card">Card</NBNavigationMenuLink>
-                    <NBNavigationMenuLink Href="/components/dialog">Dialog</NBNavigationMenuLink>
+                    <NBNavigationMenuLink Href="components/button">Button</NBNavigationMenuLink>
+                    <NBNavigationMenuLink Href="components/card">Card</NBNavigationMenuLink>
+                    <NBNavigationMenuLink Href="components/dialog">Dialog</NBNavigationMenuLink>
                 </Content>
             </NBNavigationMenuItem>
             <NBNavigationMenuItem Label="GitHub" Href="https://github.com" />
