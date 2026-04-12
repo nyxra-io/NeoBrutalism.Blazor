@@ -3,6 +3,9 @@
   "private": true,
   "description": "Tailwind CSS build tooling for NeoBrutalism.Blazor",
   "scripts": {},
+  "engines": {
+    "node": ">=22"
+  },
   "license": "MIT",
   "devDependencies": {
     "@tailwindcss/cli": "^4.2.2",
