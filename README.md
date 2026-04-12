@@ -18,6 +18,10 @@ dotnet add package NeoBrutalism.Blazor
 
 
 
+
+
+
+
 The package is published on [nuget.org](https://www.nuget.org/packages/NeoBrutalism.Blazor). No additional feed configuration is needed.
 
 ---
