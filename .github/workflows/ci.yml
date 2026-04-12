@@ -31,10 +31,10 @@ jobs:
         with:
           node-version: '22'
           cache: 'npm'
-          cache-dependency-path: src/package-lock.json
+          cache-dependency-path: src/package.json
 
       - name: Install Node dependencies (Tailwind)
-        run: npm install --prefix src
+        run: rm -f src/package-lock.json && npm install --prefix src
 
       - name: Build
         run: dotnet build -c ${{ env.BUILD_CONFIGURATION }}
