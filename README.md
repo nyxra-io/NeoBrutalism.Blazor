@@ -2,6 +2,8 @@
 
 A Blazor Razor Class Library providing a complete set of **Neo Brutalism** UI components — bold borders, hard shadows, uppercase typography, and vibrant colors.
 
+
+
 Inspired by [neobrutalism.dev](https://www.neobrutalism.dev), built natively for Blazor (.NET 10+).
 
 ---
