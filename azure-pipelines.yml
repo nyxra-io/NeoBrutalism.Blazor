@@ -3,6 +3,11 @@ trigger:
     include:
       - main
 
+pr:
+  branches:
+    include:
+      - main
+
 name: '${{ parameters.packageVersion }}'
 
 parameters:
@@ -13,10 +18,11 @@ parameters:
 
 variables:
   buildConfiguration: 'Release'
+  coverageThreshold: 85
 
 stages:
   # ──────────────────────────────────────────────
-  # Stage 0 — Test & Coverage (every push to main)
+  # Stage 0 — Test & Coverage (PR validation gate)
   # ──────────────────────────────────────────────
   - stage: Test
     displayName: 'Test & Coverage'
@@ -24,7 +30,7 @@ stages:
       vmImage: 'ubuntu-latest'
     jobs:
       - job: RunTests
-        displayName: 'Run Tests & Publish Coverage'
+        displayName: 'Build, Test & Enforce Coverage'
         steps:
           - checkout: self
 
@@ -38,7 +44,10 @@ stages:
           - script: npm ci --prefix src
             displayName: 'Install Node dependencies (Tailwind)'
 
-          - script: dotnet test tests/NeoBrutalism.Blazor.Tests.csproj -c $(buildConfiguration) --collect:"XPlat Code Coverage" --results-directory $(Agent.TempDirectory)/coverage
+          - script: dotnet build -c $(buildConfiguration)
+            displayName: 'Build'
+
+          - script: dotnet test tests/NeoBrutalism.Blazor.Tests.csproj -c $(buildConfiguration) --no-build --collect:"XPlat Code Coverage" --results-directory $(Agent.TempDirectory)/coverage
             displayName: 'Run Tests with Coverage'
 
           - task: PublishCodeCoverageResults@2
@@ -46,13 +55,35 @@ stages:
             inputs:
               summaryFileLocation: '$(Agent.TempDirectory)/coverage/**/coverage.cobertura.xml'
 
+          - script: |
+              REPORT=$(find $(Agent.TempDirectory)/coverage -name 'coverage.cobertura.xml' | head -1)
+              if [ -z "$REPORT" ]; then
+                echo "##vso[task.logissue type=error]Coverage report not found."
+                exit 1
+              fi
+              LINE_RATE=$(python3 -c "
+              import xml.etree.ElementTree as ET, sys
+              tree = ET.parse('$REPORT')
+              rate = float(tree.getroot().attrib.get('line-rate', 0))
+              print(f'{rate * 100:.2f}')
+              ")
+              echo "Line coverage: ${LINE_RATE}%"
+              echo "##vso[task.setvariable variable=lineCoverage]${LINE_RATE}"
+              PASS=$(python3 -c "print('true' if $LINE_RATE >= $(coverageThreshold) else 'false')")
+              if [ "$PASS" != "true" ]; then
+                echo "##vso[task.logissue type=error]Line coverage ${LINE_RATE}% is below the required $(coverageThreshold)%."
+                exit 1
+              fi
+              echo "Coverage check passed: ${LINE_RATE}% >= $(coverageThreshold)%"
+            displayName: 'Enforce line coverage ≥ $(coverageThreshold)%'
+
   # ──────────────────────────────────────────────
   # Stage 1 — Build, pack & publish NuGet package
   # ──────────────────────────────────────────────
   - stage: NuGet
     displayName: 'NuGet — Build & Publish'
     dependsOn: Test
-    condition: and(succeeded(), ne('${{ parameters.packageVersion }}', '0.0.0'))
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), ne('${{ parameters.packageVersion }}', '0.0.0'))
     pool:
       vmImage: 'ubuntu-latest'
     jobs:
@@ -95,7 +126,7 @@ stages:
   - stage: Docs
     displayName: 'Docs — Build & Package'
     dependsOn: Test
-    condition: and(succeeded(), ne('${{ parameters.packageVersion }}', '0.0.0'))
+    condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), ne('${{ parameters.packageVersion }}', '0.0.0'))
     pool:
       vmImage: 'ubuntu-latest'
     jobs:
