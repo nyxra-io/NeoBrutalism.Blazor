@@ -34,7 +34,7 @@ jobs:
           cache-dependency-path: src/package-lock.json
 
       - name: Install Node dependencies (Tailwind)
-        run: npm ci --prefix src
+        run: npm install --prefix src
 
       - name: Build
         run: dotnet build -c ${{ env.BUILD_CONFIGURATION }}
