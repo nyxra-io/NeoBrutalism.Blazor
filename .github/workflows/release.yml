@@ -1,0 +1,136 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Package version (SemVer, e.g. 1.2.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+env:
+  DOTNET_VERSION: '10.x'
+  BUILD_CONFIGURATION: Release
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+          dotnet-quality: 'preview'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: src/package-lock.json
+
+      - name: Install Node dependencies (Tailwind)
+        run: npm ci --prefix src
+
+      - name: Build
+        run: dotnet build -c ${{ env.BUILD_CONFIGURATION }}
+
+      - name: Test
+        run: >
+          dotnet test tests/NeoBrutalism.Blazor.Tests.csproj
+          -c ${{ env.BUILD_CONFIGURATION }}
+          --no-build
+          --verbosity normal
+
+  nuget:
+    name: Pack & Publish NuGet
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+          dotnet-quality: 'preview'
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: src/package-lock.json
+
+      - name: Install Node dependencies (Tailwind)
+        run: npm ci --prefix src
+
+      - name: Restore
+        run: dotnet restore src/NeoBrutalism.Blazor.csproj
+
+      - name: Build
+        run: dotnet build src/NeoBrutalism.Blazor.csproj -c ${{ env.BUILD_CONFIGURATION }} --no-restore
+
+      - name: Pack
+        run: >
+          dotnet pack src/NeoBrutalism.Blazor.csproj
+          -c ${{ env.BUILD_CONFIGURATION }}
+          --no-build
+          -o ./artifacts
+          /p:Version=${{ inputs.version }}
+
+      - name: Push to NuGet.org
+        run: >
+          dotnet nuget push ./artifacts/*.nupkg
+          --api-key ${{ secrets.NUGET_API_KEY }}
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate
+
+  docs:
+    name: Build Docs
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+          dotnet-quality: 'preview'
+
+      - name: Install DocFX
+        run: dotnet tool install -g docfx
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: src/package-lock.json
+
+      - name: Install Node dependencies (Tailwind)
+        run: npm ci --prefix src
+
+      - name: DocFX — Extract API metadata
+        run: docfx metadata docs/docfx/docfx.json
+
+      - name: DocFX — Build API docs
+        run: docfx build docs/docfx/docfx.json
+
+      - name: Publish Blazor WASM docs site
+        run: dotnet publish docs/NeoBrutalism.Blazor.Docs.csproj -c ${{ env.BUILD_CONFIGURATION }} -o ./docs-site
+
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-site
+          path: ./docs-site/wwwroot
