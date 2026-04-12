@@ -9,7 +9,9 @@ on:
         type: string
 
 permissions:
-  contents: read
+  contents: write
+  pages: write
+  id-token: write
 
 env:
   DOTNET_VERSION: '10.x'
@@ -127,10 +129,44 @@ jobs:
         run: docfx build docs/docfx/docfx.json
 
       - name: Publish Blazor WASM docs site
-        run: dotnet publish docs/NeoBrutalism.Blazor.Docs.csproj -c ${{ env.BUILD_CONFIGURATION }} -o ./docs-site
+        run: >
+          dotnet publish docs/NeoBrutalism.Blazor.Docs.csproj
+          -c ${{ env.BUILD_CONFIGURATION }}
+          -o ./docs-site
+          /p:BlazorWasmPathBase=/NeoBrutalism.Blazor/
 
-      - name: Upload docs artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: docs-site
           path: ./docs-site/wwwroot
+
+  deploy-docs:
+    name: Deploy to GitHub Pages
+    needs: docs
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  github-release:
+    name: Create GitHub Release
+    needs: [nuget, deploy-docs]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create tag
+        run: |
+          git tag "${{ inputs.version }}"
+          git push origin "${{ inputs.version }}"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "${{ inputs.version }}"
+          name: "${{ inputs.version }}"
+          generate_release_notes: true
