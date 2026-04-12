@@ -31,12 +31,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
-          cache-dependency-path: src/package-lock.json
+          cache-dependency-path: src/package.json
 
       - name: Install Node dependencies (Tailwind)
-        run: npm ci --prefix src
+        run: rm -f src/package-lock.json && npm install --prefix src
 
       - name: Build
         run: dotnet build -c ${{ env.BUILD_CONFIGURATION }}
@@ -66,12 +66,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
-          cache-dependency-path: src/package-lock.json
+          cache-dependency-path: src/package.json
 
       - name: Install Node dependencies (Tailwind)
-        run: npm ci --prefix src
+        run: rm -f src/package-lock.json && npm install --prefix src
 
       - name: Restore
         run: dotnet restore src/NeoBrutalism.Blazor.csproj
@@ -113,12 +113,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
-          cache-dependency-path: src/package-lock.json
+          cache-dependency-path: src/package.json
 
       - name: Install Node dependencies (Tailwind)
-        run: npm ci --prefix src
+        run: rm -f src/package-lock.json && npm install --prefix src
 
       - name: DocFX — Extract API metadata
         run: docfx metadata docs/docfx/docfx.json
