@@ -1,0 +1,39 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Timeline Step Component *@
+
+<div class="nb-timeline__step nb-timeline__step--@State.ToString().ToLowerInvariant()">
+    <div class="nb-timeline__indicator">
+        @if (Icon is not null)
+        {
+            @Icon
+        }
+    </div>
+    <div class="nb-timeline__body">
+        @if (!string.IsNullOrWhiteSpace(Title))
+        {
+            <div class="nb-timeline__title">@Title</div>
+        }
+        @if (!string.IsNullOrWhiteSpace(Description))
+        {
+            <div class="nb-timeline__description">@Description</div>
+        }
+    </div>
+</div>
+
+@code {
+    /// <summary>Step heading text.</summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>Step description text.</summary>
+    [Parameter]
+    public string? Description { get; set; }
+
+    /// <summary>Step state: <see cref="NBTimelineStepState.Completed"/>, <see cref="NBTimelineStepState.Active"/>, or <see cref="NBTimelineStepState.Upcoming"/>.</summary>
+    [Parameter]
+    public NBTimelineStepState State { get; set; } = NBTimelineStepState.Upcoming;
+
+    /// <summary>Optional icon rendered inside the step indicator.</summary>
+    [Parameter]
+    public RenderFragment? Icon { get; set; }
+}

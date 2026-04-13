@@ -1,0 +1,88 @@
+@page "/components/timeline"
+
+<NBTitle Variant="@NBTitleVariant.Title">Timeline</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A timeline with steps showing state progression. Supports vertical and horizontal orientation. Perfect for processes, roadmaps, and company history.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Vertical (default)</NBTitle>
+<DemoBlock Code="@CS.TimelineDefault">
+    <Preview>
+        <NBTimeline>
+            <NBTimelineStep Title="Order placed" Description="Your order has been confirmed." State="NBTimelineStepState.Completed" />
+            <NBTimelineStep Title="Processing" Description="We are preparing your items." State="NBTimelineStepState.Active" />
+            <NBTimelineStep Title="Shipped" Description="On the way to your address." State="NBTimelineStepState.Upcoming" />
+            <NBTimelineStep Title="Delivered" Description="Package arrives at destination." State="NBTimelineStepState.Upcoming" />
+        </NBTimeline>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Horizontal</NBTitle>
+<DemoBlock Code="@CS.TimelineHorizontal">
+    <Preview>
+        <NBTimeline Orientation="@NBTimelineOrientation.Horizontal">
+            <NBTimelineStep Title="Step 1" Description="Research" State="NBTimelineStepState.Completed" />
+            <NBTimelineStep Title="Step 2" Description="Design" State="NBTimelineStepState.Active" />
+            <NBTimelineStep Title="Step 3" Description="Develop" State="NBTimelineStepState.Upcoming" />
+            <NBTimelineStep Title="Step 4" Description="Launch" State="NBTimelineStepState.Upcoming" />
+        </NBTimeline>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+        <NBTableRow>
+            <NBTableHead>Component</NBTableHead>
+            <NBTableHead>Parameter</NBTableHead>
+            <NBTableHead>Type</NBTableHead>
+            <NBTableHead>Default</NBTableHead>
+            <NBTableHead>Description</NBTableHead>
+        </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+        <NBTableRow>
+            <NBTableCell><code>NBTimeline</code></NBTableCell>
+            <NBTableCell><code>ChildContent</code></NBTableCell>
+            <NBTableCell><code>RenderFragment?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Timeline steps.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>NBTimeline</code></NBTableCell>
+            <NBTableCell><code>Orientation</code></NBTableCell>
+            <NBTableCell><code>NBTimelineOrientation</code></NBTableCell>
+            <NBTableCell><code>Vertical</code></NBTableCell>
+            <NBTableCell>Layout direction (Vertical, Horizontal).</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>NBTimelineStep</code></NBTableCell>
+            <NBTableCell><code>Title</code></NBTableCell>
+            <NBTableCell><code>string?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Step heading.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>NBTimelineStep</code></NBTableCell>
+            <NBTableCell><code>Description</code></NBTableCell>
+            <NBTableCell><code>string?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Step description text.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>NBTimelineStep</code></NBTableCell>
+            <NBTableCell><code>State</code></NBTableCell>
+            <NBTableCell><code>NBTimelineStepState</code></NBTableCell>
+            <NBTableCell><code>Upcoming</code></NBTableCell>
+            <NBTableCell>Step state (Completed, Active, Upcoming).</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>NBTimelineStep</code></NBTableCell>
+            <NBTableCell><code>Icon</code></NBTableCell>
+            <NBTableCell><code>RenderFragment?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Optional icon in the step indicator.</NBTableCell>
+        </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">Enums</NBTitle>
+<CodeBlock Code="@CS.TimelineEnum" />

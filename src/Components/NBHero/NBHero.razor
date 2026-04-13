@@ -1,0 +1,57 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Hero Component *@
+
+<section class="nb-hero nb-hero--@Variant.ToString().ToLowerInvariant()" style="@BackgroundStyle" @attributes="AdditionalAttributes">
+    <div class="nb-hero__content">
+        @if (!string.IsNullOrWhiteSpace(Title))
+        {
+            <h1 class="nb-hero__title">@Title</h1>
+        }
+        @if (!string.IsNullOrWhiteSpace(Subtitle))
+        {
+            <p class="nb-hero__subtitle">@Subtitle</p>
+        }
+        @if (Cta is not null)
+        {
+            <div class="nb-hero__cta">@Cta</div>
+        }
+    </div>
+    @if (Visual is not null)
+    {
+        <div class="nb-hero__visual">@Visual</div>
+    }
+</section>
+
+@code {
+    /// <summary>Main heading text displayed in the hero.</summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>Secondary description text below the title.</summary>
+    [Parameter]
+    public string? Subtitle { get; set; }
+
+    /// <summary>Layout variant: <see cref="NBHeroVariant.Centered"/> or <see cref="NBHeroVariant.Split"/>.</summary>
+    [Parameter]
+    public NBHeroVariant Variant { get; set; } = NBHeroVariant.Centered;
+
+    /// <summary>Call-to-action slot (buttons, links, etc.).</summary>
+    [Parameter]
+    public RenderFragment? Cta { get; set; }
+
+    /// <summary>Visual slot (image, illustration, etc.).</summary>
+    [Parameter]
+    public RenderFragment? Visual { get; set; }
+
+    /// <summary>URL of a background image for the hero section.</summary>
+    [Parameter]
+    public string? BackgroundImage { get; set; }
+
+    /// <summary>Additional HTML attributes applied to the root element.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+
+    private string? BackgroundStyle => !string.IsNullOrWhiteSpace(BackgroundImage)
+        ? $"background-image:url('{BackgroundImage}');background-size:cover;background-position:center;"
+        : null;
+}

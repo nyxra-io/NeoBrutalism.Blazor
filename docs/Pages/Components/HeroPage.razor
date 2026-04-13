@@ -1,0 +1,99 @@
+@page "/components/hero"
+
+<NBTitle Variant="@NBTitleVariant.Title">Hero</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A full-width hero section with title, subtitle, CTA slot, and optional visual. Supports Centered and Split layouts.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Centered (default)</NBTitle>
+<DemoBlock Code="@CS.HeroCentered">
+    <Preview>
+        <NBHero Title="Build faster with NeoBrutalism"
+                Subtitle="A bold, expressive component library for Blazor.">
+            <Cta>
+                <NBButton>Get Started</NBButton>
+                <NBButton Variant="@NBButtonVariant.Neutral">Learn More</NBButton>
+            </Cta>
+        </NBHero>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Split</NBTitle>
+<DemoBlock Code="@CS.HeroSplit">
+    <Preview>
+        <NBHero Variant="@NBHeroVariant.Split"
+                Title="Ship with confidence"
+                Subtitle="Neo Brutalism components that look great out of the box.">
+            <Cta>
+                <NBButton>Start Free</NBButton>
+            </Cta>
+            <Visual>
+                <div style="width:100%;height:200px;background:var(--nb-primary);border:var(--nb-border);border-radius:var(--nb-radius);display:flex;align-items:center;justify-content:center;color:var(--nb-primary-foreground);font-weight:700;">Visual Slot</div>
+            </Visual>
+        </NBHero>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">With background image</NBTitle>
+<DemoBlock Code="@CS.HeroBackground">
+    <Preview>
+        <NBHero Title="Welcome to the jungle"
+                Subtitle="Epic hero with a background image and overlay."
+                BackgroundImage="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200">
+            <Cta>
+                <NBButton>Explore</NBButton>
+            </Cta>
+        </NBHero>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+        <NBTableRow>
+            <NBTableHead>Parameter</NBTableHead>
+            <NBTableHead>Type</NBTableHead>
+            <NBTableHead>Default</NBTableHead>
+            <NBTableHead>Description</NBTableHead>
+        </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+        <NBTableRow>
+            <NBTableCell><code>Title</code></NBTableCell>
+            <NBTableCell><code>string?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Main heading text.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>Subtitle</code></NBTableCell>
+            <NBTableCell><code>string?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Secondary description text.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>Variant</code></NBTableCell>
+            <NBTableCell><code>NBHeroVariant</code></NBTableCell>
+            <NBTableCell><code>Centered</code></NBTableCell>
+            <NBTableCell>Layout variant.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>Cta</code></NBTableCell>
+            <NBTableCell><code>RenderFragment?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Call-to-action slot (buttons, links).</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>Visual</code></NBTableCell>
+            <NBTableCell><code>RenderFragment?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Visual slot (image, illustration).</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>BackgroundImage</code></NBTableCell>
+            <NBTableCell><code>string?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>URL of a background image for the hero.</NBTableCell>
+        </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">Enums</NBTitle>
+<CodeBlock Code="@CS.HeroEnum" />

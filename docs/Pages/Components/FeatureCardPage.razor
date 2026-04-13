@@ -1,0 +1,82 @@
+@page "/components/feature-card"
+
+<NBTitle Variant="@NBTitleVariant.Title">Feature Card</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A vertical centered card with icon, title, and description. Designed for 3-4 column feature grids.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.FeatureCardDefault">
+    <Preview>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+            <NBFeatureCard Title="Fast" Description="Blazing fast performance out of the box.">
+                <Icon>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </Icon>
+            </NBFeatureCard>
+            <NBFeatureCard Title="Accessible" Description="Built with accessibility in mind.">
+                <Icon>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="m16 10-5.12 5.12L8 12.25"/></svg>
+                </Icon>
+            </NBFeatureCard>
+            <NBFeatureCard Title="Themeable" Description="Customize everything via CSS variables.">
+                <Icon>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                </Icon>
+            </NBFeatureCard>
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">With image</NBTitle>
+<DemoBlock Code="@CS.FeatureCardWithImage">
+    <Preview>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+            <NBFeatureCard Title="Dashboard" Description="Monitor your metrics at a glance." ImageSrc="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=200&fit=crop" ImageAlt="Dashboard screenshot" />
+            <NBFeatureCard Title="Analytics" Description="Deep insights into user behavior." ImageSrc="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=200&fit=crop" ImageAlt="Analytics screenshot" />
+            <NBFeatureCard Title="Reports" Description="Generate detailed PDF reports." ImageSrc="https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400&h=200&fit=crop" ImageAlt="Reports screenshot" />
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+        <NBTableRow>
+            <NBTableHead>Parameter</NBTableHead>
+            <NBTableHead>Type</NBTableHead>
+            <NBTableHead>Default</NBTableHead>
+            <NBTableHead>Description</NBTableHead>
+        </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+        <NBTableRow>
+            <NBTableCell><code>Title</code></NBTableCell>
+            <NBTableCell><code>string?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Card title.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>Description</code></NBTableCell>
+            <NBTableCell><code>string?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Card description text.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>Icon</code></NBTableCell>
+            <NBTableCell><code>RenderFragment?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Icon at the top. Ignored if ImageSrc is set.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>ImageSrc</code></NBTableCell>
+            <NBTableCell><code>string?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>URL of an image displayed instead of the icon.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>ImageAlt</code></NBTableCell>
+            <NBTableCell><code>string?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Alt text for the image. Falls back to Title.</NBTableCell>
+        </NBTableRow>
+    </NBTableBody>
+</NBTable>

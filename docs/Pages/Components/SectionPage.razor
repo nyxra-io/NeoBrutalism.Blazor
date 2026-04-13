@@ -1,0 +1,78 @@
+@page "/components/section"
+
+<NBTitle Variant="@NBTitleVariant.Title">Section</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A semantic &lt;section&gt; wrapper with vertical spacing, title, subtitle, and alternating background.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.SectionDefault">
+    <Preview>
+        <NBSection Title="Our Features" Subtitle="Everything you need to build great apps.">
+            <p>Section body content goes here.</p>
+        </NBSection>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Secondary background</NBTitle>
+<DemoBlock Code="@CS.SectionSecondary">
+    <Preview>
+        <NBSection Title="Testimonials" Background="@NBSectionBackground.Secondary">
+            <p>Customer reviews go here.</p>
+        </NBSection>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Left-aligned</NBTitle>
+<DemoBlock Code="@CS.SectionLeftAlign">
+    <Preview>
+        <NBSection Title="About Us" Subtitle="Our story and mission." Align="@NBSectionAlign.Left">
+            <p>Left-aligned section content.</p>
+        </NBSection>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+        <NBTableRow>
+            <NBTableHead>Parameter</NBTableHead>
+            <NBTableHead>Type</NBTableHead>
+            <NBTableHead>Default</NBTableHead>
+            <NBTableHead>Description</NBTableHead>
+        </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+        <NBTableRow>
+            <NBTableCell><code>Title</code></NBTableCell>
+            <NBTableCell><code>string?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Section heading.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>Subtitle</code></NBTableCell>
+            <NBTableCell><code>string?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Section subtitle.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>Background</code></NBTableCell>
+            <NBTableCell><code>NBSectionBackground</code></NBTableCell>
+            <NBTableCell><code>Default</code></NBTableCell>
+            <NBTableCell>Background style.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>ChildContent</code></NBTableCell>
+            <NBTableCell><code>RenderFragment?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Section body content.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>Align</code></NBTableCell>
+            <NBTableCell><code>NBSectionAlign</code></NBTableCell>
+            <NBTableCell><code>Center</code></NBTableCell>
+            <NBTableCell>Text alignment for title and subtitle.</NBTableCell>
+        </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">Enums</NBTitle>
+<CodeBlock Code="@CS.SectionEnum" />

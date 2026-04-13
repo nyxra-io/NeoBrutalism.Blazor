@@ -1,0 +1,78 @@
+@page "/components/footer"
+
+<NBTitle Variant="@NBTitleVariant.Title">Footer</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A structured multi-column footer with slots for link columns, social icons, and copyright text. Responsive: columns stack on mobile.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.FooterDefault">
+    <Preview>
+        <NBFooter Copyright="© 2026 Acme Inc. All rights reserved.">
+            <Columns>
+                <NBFooterColumn Title="Product">
+                    <a href="#">Features</a>
+                    <a href="#">Pricing</a>
+                    <a href="#">Changelog</a>
+                </NBFooterColumn>
+                <NBFooterColumn Title="Company">
+                    <a href="#">About</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Careers</a>
+                </NBFooterColumn>
+                <NBFooterColumn Title="Legal">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </NBFooterColumn>
+            </Columns>
+        </NBFooter>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+        <NBTableRow>
+            <NBTableHead>Component</NBTableHead>
+            <NBTableHead>Parameter</NBTableHead>
+            <NBTableHead>Type</NBTableHead>
+            <NBTableHead>Default</NBTableHead>
+            <NBTableHead>Description</NBTableHead>
+        </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+        <NBTableRow>
+            <NBTableCell><code>NBFooter</code></NBTableCell>
+            <NBTableCell><code>Columns</code></NBTableCell>
+            <NBTableCell><code>RenderFragment?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Slot for link columns.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>NBFooter</code></NBTableCell>
+            <NBTableCell><code>Social</code></NBTableCell>
+            <NBTableCell><code>RenderFragment?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Slot for social icons.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>NBFooter</code></NBTableCell>
+            <NBTableCell><code>Copyright</code></NBTableCell>
+            <NBTableCell><code>string?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Copyright text.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>NBFooterColumn</code></NBTableCell>
+            <NBTableCell><code>Title</code></NBTableCell>
+            <NBTableCell><code>string?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Column heading.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>NBFooterColumn</code></NBTableCell>
+            <NBTableCell><code>ChildContent</code></NBTableCell>
+            <NBTableCell><code>RenderFragment?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Column links.</NBTableCell>
+        </NBTableRow>
+    </NBTableBody>
+</NBTable>

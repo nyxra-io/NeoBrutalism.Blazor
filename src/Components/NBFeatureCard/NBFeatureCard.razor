@@ -1,0 +1,47 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Feature Card Component *@
+
+<div class="nb-feature-card" @attributes="AdditionalAttributes">
+    @if (!string.IsNullOrWhiteSpace(ImageSrc))
+    {
+        <img class="nb-feature-card__image" src="@ImageSrc" alt="@(ImageAlt ?? Title ?? "")" />
+    }
+    else if (Icon is not null)
+    {
+        <div class="nb-feature-card__icon">@Icon</div>
+    }
+    @if (!string.IsNullOrWhiteSpace(Title))
+    {
+        <div class="nb-feature-card__title">@Title</div>
+    }
+    @if (!string.IsNullOrWhiteSpace(Description))
+    {
+        <div class="nb-feature-card__description">@Description</div>
+    }
+</div>
+
+@code {
+    /// <summary>Card title text.</summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>Card description text.</summary>
+    [Parameter]
+    public string? Description { get; set; }
+
+    /// <summary>Icon rendered at the top of the card. Ignored if <see cref="ImageSrc"/> is set.</summary>
+    [Parameter]
+    public RenderFragment? Icon { get; set; }
+
+    /// <summary>URL of an image to display instead of an icon.</summary>
+    [Parameter]
+    public string? ImageSrc { get; set; }
+
+    /// <summary>Alt text for the image. Falls back to <see cref="Title"/> if not set.</summary>
+    [Parameter]
+    public string? ImageAlt { get; set; }
+
+    /// <summary>Additional HTML attributes applied to the root element.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+}

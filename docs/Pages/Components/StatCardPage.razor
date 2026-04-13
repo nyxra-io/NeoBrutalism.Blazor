@@ -1,0 +1,60 @@
+@page "/components/stat-card"
+
+<NBTitle Variant="@NBTitleVariant.Title">Stat Card</NBTitle>
+<NBTitle Variant="@NBTitleVariant.Subtitle">A card with a large number, label, and optional trend indicator. Perfect for dashboards and landing page metrics.</NBTitle>
+
+<NBTitle Variant="@NBTitleVariant.Section">Default</NBTitle>
+<DemoBlock Code="@CS.StatCardDefault">
+    <Preview>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+            <NBStatCard Value="1,234" Label="Active users" Trend="@NBStatCardTrend.Up" />
+            <NBStatCard Value="$48K" Label="Revenue" Trend="@NBStatCardTrend.Up" />
+            <NBStatCard Value="3.2%" Label="Bounce rate" Trend="@NBStatCardTrend.Down" />
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Without trend</NBTitle>
+<DemoBlock Code="@CS.StatCardNoTrend">
+    <Preview>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;">
+            <NBStatCard Value="99.9%" Label="Uptime" />
+            <NBStatCard Value="42" Label="Open issues" />
+        </div>
+    </Preview>
+</DemoBlock>
+
+<NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
+<NBTable AdditionalClass="docs-props">
+    <NBTableHeader>
+        <NBTableRow>
+            <NBTableHead>Parameter</NBTableHead>
+            <NBTableHead>Type</NBTableHead>
+            <NBTableHead>Default</NBTableHead>
+            <NBTableHead>Description</NBTableHead>
+        </NBTableRow>
+    </NBTableHeader>
+    <NBTableBody>
+        <NBTableRow>
+            <NBTableCell><code>Value</code></NBTableCell>
+            <NBTableCell><code>string</code></NBTableCell>
+            <NBTableCell><code>""</code></NBTableCell>
+            <NBTableCell>The large number/value to display.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>Label</code></NBTableCell>
+            <NBTableCell><code>string?</code></NBTableCell>
+            <NBTableCell><code>null</code></NBTableCell>
+            <NBTableCell>Descriptive label below the value.</NBTableCell>
+        </NBTableRow>
+        <NBTableRow>
+            <NBTableCell><code>Trend</code></NBTableCell>
+            <NBTableCell><code>NBStatCardTrend</code></NBTableCell>
+            <NBTableCell><code>None</code></NBTableCell>
+            <NBTableCell>Trend direction indicator (None, Up, Down).</NBTableCell>
+        </NBTableRow>
+    </NBTableBody>
+</NBTable>
+
+<NBTitle Variant="@NBTitleVariant.Section">Enums</NBTitle>
+<CodeBlock Code="@CS.StatCardEnum" />

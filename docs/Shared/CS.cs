@@ -1146,4 +1146,166 @@ public static class CS
             private void ShowError() => Sonner.Error("Something went wrong.");
         }
         """;
+
+    // Hero
+    public const string HeroCentered = """
+        <NBHero Title="Build faster with NeoBrutalism"
+                Subtitle="A bold, expressive component library for Blazor.">
+            <Cta>
+                <NBButton>Get Started</NBButton>
+                <NBButton Variant="@NBButtonVariant.Neutral">Learn More</NBButton>
+            </Cta>
+        </NBHero>
+        """;
+
+    public const string HeroSplit = """
+        <NBHero Variant="@NBHeroVariant.Split"
+                Title="Ship with confidence"
+                Subtitle="Neo Brutalism components that look great out of the box.">
+            <Cta>
+                <NBButton>Start Free</NBButton>
+            </Cta>
+            <Visual>
+                <img src="hero.png" alt="Hero visual" />
+            </Visual>
+        </NBHero>
+        """;
+
+    public const string HeroEnum = """
+        public enum NBHeroVariant { Centered, Split }
+        """;
+
+    public const string HeroBackground = """
+        <NBHero Title="Welcome to the jungle"
+                Subtitle="Epic hero with a background image and overlay."
+                BackgroundImage="https://example.com/bg.jpg">
+            <Cta>
+                <NBButton>Explore</NBButton>
+            </Cta>
+        </NBHero>
+        """;
+
+    // Section
+    public const string SectionDefault = """
+        <NBSection Title="Our Features" Subtitle="Everything you need to build great apps.">
+            <p>Section body content goes here.</p>
+        </NBSection>
+        """;
+
+    public const string SectionSecondary = """
+        <NBSection Title="Testimonials" Background="@NBSectionBackground.Secondary">
+            <p>Customer reviews go here.</p>
+        </NBSection>
+        """;
+
+    public const string SectionEnum = """
+        public enum NBSectionBackground { Default, Secondary }
+        public enum NBSectionAlign { Center, Left, Right }
+        """;
+
+    public const string SectionLeftAlign = """
+        <NBSection Title="About Us" Subtitle="Our story and mission." Align="@NBSectionAlign.Left">
+            <p>Left-aligned section content.</p>
+        </NBSection>
+        """;
+
+    // Timeline
+    public const string TimelineDefault = """
+        <NBTimeline>
+            <NBTimelineStep Title="Order placed" Description="Your order has been confirmed."
+                            State="NBTimelineStepState.Completed" />
+            <NBTimelineStep Title="Processing" Description="We are preparing your items."
+                            State="NBTimelineStepState.Active" />
+            <NBTimelineStep Title="Shipped" Description="On the way to your address."
+                            State="NBTimelineStepState.Upcoming" />
+            <NBTimelineStep Title="Delivered" Description="Package arrives at destination."
+                            State="NBTimelineStepState.Upcoming" />
+        </NBTimeline>
+        """;
+
+    public const string TimelineEnum = """
+        public enum NBTimelineStepState { Completed, Active, Upcoming }
+        public enum NBTimelineOrientation { Vertical, Horizontal }
+        """;
+
+    public const string TimelineHorizontal = """
+        <NBTimeline Orientation="@NBTimelineOrientation.Horizontal">
+            <NBTimelineStep Title="Step 1" Description="Research"
+                            State="NBTimelineStepState.Completed" />
+            <NBTimelineStep Title="Step 2" Description="Design"
+                            State="NBTimelineStepState.Active" />
+            <NBTimelineStep Title="Step 3" Description="Develop"
+                            State="NBTimelineStepState.Upcoming" />
+            <NBTimelineStep Title="Step 4" Description="Launch"
+                            State="NBTimelineStepState.Upcoming" />
+        </NBTimeline>
+        """;
+
+    // Footer
+    public const string FooterDefault = """
+        <NBFooter Copyright="© 2026 Acme Inc. All rights reserved.">
+            <Columns>
+                <NBFooterColumn Title="Product">
+                    <a href="#">Features</a>
+                    <a href="#">Pricing</a>
+                    <a href="#">Changelog</a>
+                </NBFooterColumn>
+                <NBFooterColumn Title="Company">
+                    <a href="#">About</a>
+                    <a href="#">Blog</a>
+                    <a href="#">Careers</a>
+                </NBFooterColumn>
+                <NBFooterColumn Title="Legal">
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </NBFooterColumn>
+            </Columns>
+        </NBFooter>
+        """;
+
+    // Feature Card
+    public const string FeatureCardDefault = """
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+            <NBFeatureCard Title="Fast" Description="Blazing fast performance out of the box.">
+                <Icon><svg>…</svg></Icon>
+            </NBFeatureCard>
+            <NBFeatureCard Title="Accessible" Description="Built with accessibility in mind.">
+                <Icon><svg>…</svg></Icon>
+            </NBFeatureCard>
+            <NBFeatureCard Title="Themeable" Description="Customize everything via CSS variables.">
+                <Icon><svg>…</svg></Icon>
+            </NBFeatureCard>
+        </div>
+        """;
+
+    public const string FeatureCardWithImage = """
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+            <NBFeatureCard Title="Dashboard" Description="Monitor your metrics."
+                          ImageSrc="dashboard.jpg" ImageAlt="Dashboard screenshot" />
+            <NBFeatureCard Title="Analytics" Description="Deep insights."
+                          ImageSrc="analytics.jpg" ImageAlt="Analytics screenshot" />
+            <NBFeatureCard Title="Reports" Description="Generate PDF reports."
+                          ImageSrc="reports.jpg" ImageAlt="Reports screenshot" />
+        </div>
+        """;
+
+    // Stat Card
+    public const string StatCardDefault = """
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+            <NBStatCard Value="1,234" Label="Active users" Trend="@NBStatCardTrend.Up" />
+            <NBStatCard Value="$48K" Label="Revenue" Trend="@NBStatCardTrend.Up" />
+            <NBStatCard Value="3.2%" Label="Bounce rate" Trend="@NBStatCardTrend.Down" />
+        </div>
+        """;
+
+    public const string StatCardNoTrend = """
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;">
+            <NBStatCard Value="99.9%" Label="Uptime" />
+            <NBStatCard Value="42" Label="Open issues" />
+        </div>
+        """;
+
+    public const string StatCardEnum = """
+        public enum NBStatCardTrend { None, Up, Down }
+        """;
 }
