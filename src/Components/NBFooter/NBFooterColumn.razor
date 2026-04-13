@@ -1,0 +1,20 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Footer Column Component *@
+
+<div class="nb-footer__column">
+    @if (!string.IsNullOrWhiteSpace(Title))
+    {
+        <div class="nb-footer__column-title">@Title</div>
+    }
+    @ChildContent
+</div>
+
+@code {
+    /// <summary>Column heading text.</summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>Column links and content.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

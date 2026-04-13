@@ -1,0 +1,35 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Footer Component *@
+
+<footer class="nb-footer" @attributes="AdditionalAttributes">
+    @if (Columns is not null)
+    {
+        <div class="nb-footer__columns">@Columns</div>
+    }
+    @if (Social is not null)
+    {
+        <div class="nb-footer__social">@Social</div>
+    }
+    @if (!string.IsNullOrWhiteSpace(Copyright))
+    {
+        <div class="nb-footer__copyright">@Copyright</div>
+    }
+</footer>
+
+@code {
+    /// <summary>Slot for link columns (use <see cref="NBFooterColumn"/> components).</summary>
+    [Parameter]
+    public RenderFragment? Columns { get; set; }
+
+    /// <summary>Slot for social media icons and links.</summary>
+    [Parameter]
+    public RenderFragment? Social { get; set; }
+
+    /// <summary>Copyright text displayed at the bottom of the footer.</summary>
+    [Parameter]
+    public string? Copyright { get; set; }
+
+    /// <summary>Additional HTML attributes applied to the root element.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+}

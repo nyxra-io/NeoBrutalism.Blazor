@@ -1,0 +1,40 @@
+@namespace NeoBrutalism.Blazor
+@* Neo Brutalism Section Component *@
+
+<section class="nb-section nb-section--@Background.ToString().ToLowerInvariant() nb-section--align-@Align.ToString().ToLowerInvariant()" @attributes="AdditionalAttributes">
+    @if (!string.IsNullOrWhiteSpace(Title))
+    {
+        <h2 class="nb-section__title">@Title</h2>
+    }
+    @if (!string.IsNullOrWhiteSpace(Subtitle))
+    {
+        <p class="nb-section__subtitle">@Subtitle</p>
+    }
+    <div class="nb-section__body">@ChildContent</div>
+</section>
+
+@code {
+    /// <summary>Section heading text.</summary>
+    [Parameter]
+    public string? Title { get; set; }
+
+    /// <summary>Section subtitle text displayed below the title.</summary>
+    [Parameter]
+    public string? Subtitle { get; set; }
+
+    /// <summary>Background style: <see cref="NBSectionBackground.Default"/> or <see cref="NBSectionBackground.Secondary"/>.</summary>
+    [Parameter]
+    public NBSectionBackground Background { get; set; } = NBSectionBackground.Default;
+
+    /// <summary>Text alignment for title and subtitle: <see cref="NBSectionAlign.Center"/>, <see cref="NBSectionAlign.Left"/>, or <see cref="NBSectionAlign.Right"/>.</summary>
+    [Parameter]
+    public NBSectionAlign Align { get; set; } = NBSectionAlign.Center;
+
+    /// <summary>Section body content.</summary>
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+
+    /// <summary>Additional HTML attributes applied to the root element.</summary>
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object>? AdditionalAttributes { get; set; }
+}
