@@ -9,20 +9,23 @@
             @ChildContent
         </div>
     </div>
-    <button type="button" class="nb-carousel__btn nb-carousel__btn-prev nb-btn nb-btn--noshadow nb-btn--icon"
-            disabled="@(!CanGoPrev)" @onclick="Previous" aria-label="Previous slide">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m15 18-6-6 6-6" />
-        </svg>
-    </button>
-    <button type="button" class="nb-carousel__btn nb-carousel__btn-next nb-btn nb-btn--noshadow nb-btn--icon"
-            disabled="@(!CanGoNext)" @onclick="Next" aria-label="Next slide">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m9 18 6-6-6-6" />
-        </svg>
-    </button>
+    @if (!HideArrows)
+    {
+        <button type="button" class="nb-carousel__btn nb-carousel__btn-prev nb-btn nb-btn--noshadow nb-btn--icon"
+                disabled="@(!CanGoPrev)" @onclick="Previous" aria-label="Previous slide">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m15 18-6-6 6-6" />
+            </svg>
+        </button>
+        <button type="button" class="nb-carousel__btn nb-carousel__btn-next nb-btn nb-btn--noshadow nb-btn--icon"
+                disabled="@(!CanGoNext)" @onclick="Next" aria-label="Next slide">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m9 18 6-6-6-6" />
+            </svg>
+        </button>
+    }
 </div>
 
 @code {
@@ -44,6 +47,9 @@
 
     [Parameter]
     public int SlideCount { get; set; } = 1;
+
+    [Parameter]
+    public bool HideArrows { get; set; }
 
     private bool CanGoPrev => _current > 0;
     private bool CanGoNext => _current < SlideCount - 1;

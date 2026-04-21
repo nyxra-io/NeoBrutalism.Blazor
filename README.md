@@ -91,7 +91,7 @@ All visual tokens are CSS custom properties (`--nb-*`). Override them in two way
 
 ## Components
 
-For the full component reference — usage examples, parameters, and live demos — see the **[documentation site](docs/)**.
+For the full component reference — usage examples, parameters, and live demos — see the **[documentation site](https://nyxra-io.github.io/NeoBrutalism.Blazor)**.
 
 ---
 
