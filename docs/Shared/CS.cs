@@ -1062,6 +1062,14 @@ public static class CS
         </NBCarousel>
         """;
 
+    public const string CarouselHideArrows = """
+        <NBCarousel SlideCount="3" HideArrows="true">
+            <NBCarouselItem><div style="padding:2rem; text-align:center; background:var(--nb-bg-secondary)">Slide 1</div></NBCarouselItem>
+            <NBCarouselItem><div style="padding:2rem; text-align:center; background:var(--nb-primary); color:white">Slide 2</div></NBCarouselItem>
+            <NBCarouselItem><div style="padding:2rem; text-align:center; background:var(--nb-bg-secondary)">Slide 3</div></NBCarouselItem>
+        </NBCarousel>
+        """;
+
     // DataTable
     public const string DataTableDefault = """
         <NBDataTable Items="_payments" Columns="_columns" Searchable="true"

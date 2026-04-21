@@ -163,4 +163,28 @@ public class NBCarouselTests : BunitContext
         Assert.NotNull(cut.Find(".nb-carousel__btn-prev[disabled]"));
         Assert.NotNull(cut.Find(".nb-carousel__btn-next[disabled]"));
     }
+
+    [Fact]
+    public void HideArrows_Hides_Buttons()
+    {
+        var cut = Render<NBCarousel>(p => p
+            .Add(c => c.SlideCount, 3)
+            .Add(c => c.HideArrows, true)
+            .AddChildContent("<div>Slide</div>"));
+
+        Assert.Empty(cut.FindAll(".nb-carousel__btn-prev"));
+        Assert.Empty(cut.FindAll(".nb-carousel__btn-next"));
+    }
+
+    [Fact]
+    public void HideArrows_False_Shows_Buttons()
+    {
+        var cut = Render<NBCarousel>(p => p
+            .Add(c => c.SlideCount, 3)
+            .Add(c => c.HideArrows, false)
+            .AddChildContent("<div>Slide</div>"));
+
+        Assert.NotEmpty(cut.FindAll(".nb-carousel__btn-prev"));
+        Assert.NotEmpty(cut.FindAll(".nb-carousel__btn-next"));
+    }
 }

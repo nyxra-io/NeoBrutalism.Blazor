@@ -35,6 +35,19 @@
     </Preview>
 </DemoBlock>
 
+<NBTitle Variant="@NBTitleVariant.Section">Hide Arrows</NBTitle>
+<DemoBlock Code="@CS.CarouselHideArrows">
+    <Preview>
+        <div style="max-width:24rem; margin: 0 3rem;">
+            <NBCarousel SlideCount="3" HideArrows="true">
+                <NBCarouselItem><div style="padding:2rem; text-align:center; background:var(--nb-bg-secondary)">Slide 1</div></NBCarouselItem>
+                <NBCarouselItem><div style="padding:2rem; text-align:center; background:var(--nb-primary); color:white">Slide 2</div></NBCarouselItem>
+                <NBCarouselItem><div style="padding:2rem; text-align:center; background:var(--nb-bg-secondary)">Slide 3</div></NBCarouselItem>
+            </NBCarousel>
+        </div>
+    </Preview>
+</DemoBlock>
+
 <NBTitle Variant="@NBTitleVariant.Section">Parameters</NBTitle>
 
 <NBTitle Variant="@NBTitleVariant.SubSection">NBCarousel</NBTitle>
@@ -77,6 +90,12 @@
                 <NBTableCell><code>int</code></NBTableCell>
                 <NBTableCell><code>3000</code></NBTableCell>
                 <NBTableCell>Auto-play interval in ms.</NBTableCell>
+            </NBTableRow>
+            <NBTableRow>
+                <NBTableCell><code>HideArrows</code></NBTableCell>
+                <NBTableCell><code>bool</code></NBTableCell>
+                <NBTableCell><code>false</code></NBTableCell>
+                <NBTableCell>Hide navigation arrows.</NBTableCell>
             </NBTableRow>
     </NBTableBody>
 </NBTable>
